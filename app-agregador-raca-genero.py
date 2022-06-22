@@ -30,7 +30,7 @@ st.set_page_config(
 # components.html(
 #     """
 #         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-#         data-text="Agregador de Pesquisas eleitorais por religião - Cebrap"
+#         data-text="Agregador de Pesquisas eleitorais do gênero e raça - LabDados FGV Direito SP"
 #         data-url="https://cebrap.org.br/teste-app/"
 #         data-show-count="true">
 #         data-size="Large"
@@ -329,7 +329,6 @@ if options_turn == 'Primeiro Turno':
         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
         </svg> Intenção de voto por gênero:</h3><br>
         """, unsafe_allow_html=True)
-        ## opções retiradas 'Espírita', 'Umbanda/Candomblé', 'Ateu',
         gen = st.selectbox('Selecione o gênero:',options=['--Escolha a opção--','Feminino', 'Masculino'])
 
     if gen == 'Feminino':
@@ -524,7 +523,7 @@ if options_turn == 'Primeiro Turno':
         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
         </svg> Intenção de voto por raça:</h3><br>
         """, unsafe_allow_html=True)
-        raça = st.selectbox('Selecione a religião:',options=['--Escolha a opção--','Parda', 'Branca', 'Preta', 'Outras'])
+        raça = st.selectbox('Selecione a raça:',options=['--Escolha a opção--','Parda', 'Branca', 'Preta', 'Outras'])
 
     if raça == 'Parda':
 
@@ -1358,7 +1357,6 @@ if options_turn == 'Primeiro Turno':
         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
         </svg> Rejeição por gênero:</h3><br>
         """, unsafe_allow_html=True)
-        ## opções retiradas 'Espírita', 'Umbanda/Candomblé', 'Ateu',
         gen = st.selectbox('Selecione o gênero:',options=['--Escolha a opção--','Feminino ', 'Masculino '])
 
     if gen == 'Feminino ':
@@ -1554,7 +1552,7 @@ if options_turn == 'Primeiro Turno':
     #     </svg> Rejeição por Raça:</h3><br>
     #     """, unsafe_allow_html=True)
         
-    #     raça3 = st.selectbox('Selecione a religião:',options=[' --Escolha a opção--',' Parda', ' Branca', ' Preta', ' Outras'])
+    #     raça3 = st.selectbox('Selecione a raça:',options=[' --Escolha a opção--',' Parda', ' Branca', ' Preta', ' Outras'])
 
     #     if raça3 == ' Parda':
 
@@ -2782,11 +2780,11 @@ with st.container():
         <p style='text-align: justify; font-family:Segoe UI;'>1. O banco de dados é atualizado constantemente. No momento, ele contém informações de {len(df)} pesquisas eleitorais;</p>
         <p style='text-align: justify; font-family:Segoe UI;'>2. Os institutos de pesquisa consultados são: { ', '.join(set(df['nome_instituto'].T)).title()};</p>
         <p style='text-align: justify; font-family:Segoe UI;'>3. O agregador de pesquisas por gênero e raça compila dados dos levantamentos realizados pelos institutos. Não nos responsabilizamos pelas amostras ou técnicas;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>4. Para a composição do banco de dados são consideradas apenas pesquisas nacionais, bem como informações dos três principais candidatos do 1º turno das eleições presidenciais: Lula, Bolsonaro e Ciro Gomes, e de Lula e Bolsonaro, no 2º turno. Levando em conta o recorte religioso, a partir de tais pesquisas, coletamos as intenção de voto dos candidatos nos dois turnos, assim como as intenções de voto e a rejeição gerais.;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>4. Para a composição do banco de dados são consideradas apenas pesquisas nacionais, bem como informações dos três principais candidatos do 1º turno das eleições presidenciais: Lula, Bolsonaro e Ciro Gomes, e de Lula e Bolsonaro, no 2º turno. Levando em conta o recorte de gênero e por raça, a partir de tais pesquisas, coletamos as intenção de voto dos candidatos nos dois turnos, assim como a rejeição;</p>
         <p style='text-align: justify; font-family:Segoe UI;'>5. O percentual de <i>rejeição</i> dos candidatos obtivemos por meio da resposta de eleitores que declaram "não votar de jeito nenhum” em determinado candidato;</p>
         <p style='text-align: justify; font-family:Segoe UI;'>6. O percentual de <i>reprovação da administração</i> do Presidente Jair Bolsonaro foi obtido a partir da soma da respostas "ruim" e "péssimo" à questão que avalia a satisfação dos eleitores para com a administração do mandatário: "a administração do Presidente Jair Bolsonaro está sendo ótima, boa, regular, ruim ou péssima?";</p> 
-        <p style='text-align: justify; font-family:Segoe UI;'>7. Os institutos de pesquisa não incluem dados do recorte religioso nas pesquisas realizadas por motívos internos. Portanto, a coleta de tais informações é inconstante, visto que nem sempre está disponível;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>8. Devido a irregularidade na coleta e ao tamano da amostra, dados referentes a raças demograficamente minoritárias tal como amarelos e indígenas, entre outras mais, apresentam do ponto de vista estatístico distorções severas. Assim, quando os dados permitem, decidiu-se pela sua inclusão na categoria "outros";</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>7. Os institutos de pesquisa não incluem dados do recorte racial em todas as pesquisas realizadas por motivos internos. Portanto, a coleta de tais informações é inconstante, visto que nem sempre está disponível;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>8. Devido a irregularidade na coleta e ao tamanho da amostra, dados referentes a raças demograficamente minoritárias tal como amarelos e indígenas, entre outras mais, apresentam do ponto de vista estatístico distorções severas. Assim, quando os dados permitem, decidiu-se pela sua inclusão na categoria "outros";</p>
         <p style='text-align: justify; font-family:Segoe UI;'>9. Vale destacar que os dados censitários, principais referências para a construção da amostragem das pesquisas, estão defasados. Os valores de amostragem variam conforme os critérios próprios de cada instituto de pesquisa. Os institutos utilizam dados o IBGE de 2010, da PNAD de 2021 e 2022 e também do TSE. Para termos uma noção do universo amostrado pelos institutos: Em relação a amostra de gênero dos candidatos, os <i>homens</i> variaram entre {int(df['am_h'].agg('min'))}% e {int(df['am_h'].agg('max'))}% e as <i>mulheres</i> entre {int(df['am_m'].agg('min'))}% e {int(df['am_m'].agg('max'))}%. Em relação ao recorte racial, a amostra dos <i>pardos</i> variou entre {int(df['am_par'].agg('min'))}% e {int(df['am_par'].agg('max'))}%; <i>brancos</i>, de {int(df['am_bra'].agg('min'))}% a {int(df['am_bra'].agg('max'))}%; <i>pretos</i>, de {int(df['am_pre'].agg('min'))}% a {int(df['am_pre'].agg('max'))}%; <i>amarelos</i> entre {int(df['am_amar'].agg('min'))}% e {int(df['am_amar'].agg('max'))}%; <i>indígenas</i>, de {int(df['am_ind'].agg('min'))}% e {int(df['am_ind'].agg('max'))}% e a categoria <i>outros</i> variou de {int(df['am_out'].agg('min'))}% a {int(df['am_out'].agg('max'))}%.;</p> 
         <p style='text-align: justify; font-family:Segoe UI;'>10. Em relação às pesquisas, no levantamento de dados para o agregador, consideramos a última data quando os entrevistadores colheram as respostas e não a data da divulgação da pesquisa, que por interesses diversos, podem ser adiadas por semanas ou não publicadas;</p>
         <p style='text-align: justify; font-family:Segoe UI;'>11. Partindo da data da última coleta das pesquisas calculou-se a média móvel de diversas variáveis correspondendo à {m_m} dias;</p>
