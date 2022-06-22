@@ -2829,6 +2829,10 @@ with st.container():
             <h6 style='text-align: center; color: #0b437e;font-family:Segoe UI;'>Método de coleta das pesquisas:</h6><p style='text-align: center';>
                 Telefone: {df[df['tipo_coleta']=='telefone'].tipo_coleta.value_counts()[0]}
                 <br>Presencial: {df[df['tipo_coleta']=='presencial'].tipo_coleta.value_counts()[0]}</p>
+            <h6 style='text-align: center; color:#0b437e;font-family:Segoe UI;'>Contador de pesquisas para dados gerais:</h6> 
+            <p style='color:#000000;font-weight:700;font-size:18px;text-align: center';>
+            1º turno: {len(df[df['lul_ger_1t']>=1])}<br>
+            2º turno: {len(df[df['lul_ger_2t']>=1])}</p>
             <h6 style='text-align: center; color: #0b437e;font-family:Segoe UI;'>Contador de pesquisas com perguntas sobre gênero e raça:</h6> 
             <p style='color:#000000;font-weight:700;font-size:18px;text-align: center';>
             1º turno<br>
@@ -2848,10 +2852,6 @@ with st.container():
             <br>Homem: {len(df[df['lul_h_1t']>=1])}
             <br>Mulher: {len(df[df['lul_m_1t']>=1])}
             </p>
-            <h6 style='text-align: center; color:#0b437e;font-family:Segoe UI;'>Contador de pesquisas para dados gerais:</h6> 
-            <p style='color:#000000;font-weight:700;font-size:18px;text-align: center';>
-            1º turno: {len(df[df['lul_ger_1t']>=1])}<br>
-            2º turno: {len(df[df['lul_ger_2t']>=1])}</p>
         """, unsafe_allow_html=True)
 
         ### Como citar o agregador ####
