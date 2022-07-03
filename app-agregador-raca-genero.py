@@ -966,250 +966,113 @@ if options_turn == 'Primeiro Turno':
         col1, col2, col3 = st.columns([.5,3,.5])
 
         with col2:
-            # if raça2 == 'Parda':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'Pardos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_par_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_par_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_par_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_par_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça2 == 'Branca':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'Brancos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_bra_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_bra_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_bra_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_bra_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça2 == 'Preta':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'Pretos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_pre_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_pre_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_pre_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_pre_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça2 == 'Outras':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'outras' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_out_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_out_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_out_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
             if raça2 == 'Homens':
 
-                df.set_index('sigla',inplace = True)
+                fonte = df.query(f"nome_instituto =='{inst}'")
+                genero_escolhido = 'h'
+                genero = 'homens'
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Homens' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[df['nome_instituto']==inst].lul_h_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
-                plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                fig = go.Figure()
+                ##lula
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'lul_{genero_escolhido}_1t'], mode='lines+markers', name=f"Lula - {genero}",
+                                        line=dict(color='firebrick', width=2.5),legendrank=1))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['lul_ger_1t'],mode='lines+markers', name=f"Lula - geral", 
+                                        line=dict(color='firebrick', width=1, dash='dot'),legendrank=2))
+                ##bolsonaro
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'bol_{genero_escolhido}_1t'], mode='lines+markers', name=f"Bolsonaro - {genero}",
+                                        line=dict(color='royalblue', width=2.5),legendrank=3))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['bol_ger_1t'],mode='lines+markers', name=f"Bolsonaro - geral", 
+                                        line=dict(color='royalblue', width=1, dash='dot'),legendrank=4))
+                
+                fig.update_layout(width = 800, height = 700, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+                        title=(f"""
+                        Intenção de voto 'geral' e de '{genero}' por candidato segundo '{inst.title()}' (1º turno)
+                        <br>
+                        <br>
+                        """),
+                                        xaxis_title='Mês, ano e instituto de pesquisa',
+                                        yaxis_title='Intenção de voto (%)',
+                                        font=dict(family="arial",size=13),
+                                        legend=dict(
+                            yanchor="auto",
+                            y=1.13,
+                            xanchor="auto",
+                            x=0.4,
+                            orientation="h",
+                            font_family="arial",))
+                fig.update_xaxes(tickangle = 300,title_font_family="arial")
+                fig.update_yaxes(range=[0,70])
 
-                plt.plot(df[df['nome_instituto']==inst].bol_h_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
-                plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[df['nome_instituto']==inst].ciro_h_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_homens")
-                plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+                # Add image
+                fig.add_layout_image(
+                    dict(
+                        source=agre,
+                        xref="paper", yref="paper",
+                        x=.99, y=1.08,
+                        sizex=0.14, sizey=0.14,
+                        xanchor="right", yanchor="bottom"
+                    )
+                )
+                
+                st.plotly_chart(fig)
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
-
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-                #axes = plt.gca()
-                #axes.xaxis.grid()
-
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-                st.pyplot(plt)
-
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
 
             if raça2 == 'Mulheres':
 
-                df.set_index('sigla',inplace = True)
+                fonte = df.query(f"nome_instituto =='{inst}'")
+                genero_escolhido = 'm'
+                genero = 'mulheres'
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Mulheres' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[df['nome_instituto']==inst].lul_m_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                fig = go.Figure()
+                ##lula
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'lul_{genero_escolhido}_1t'], mode='lines+markers', name=f"Lula - {genero}",
+                                        line=dict(color='firebrick', width=2.5),legendrank=1))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['lul_ger_1t'],mode='lines+markers', name=f"Lula - geral", 
+                                        line=dict(color='firebrick', width=1, dash='dot'),legendrank=2))
+                ##bolsonaro
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'bol_{genero_escolhido}_1t'], mode='lines+markers', name=f"Bolsonaro - {genero}",
+                                        line=dict(color='royalblue', width=2.5),legendrank=3))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['bol_ger_1t'],mode='lines+markers', name=f"Bolsonaro - geral", 
+                                        line=dict(color='royalblue', width=1, dash='dot'),legendrank=4))
+                
+                fig.update_layout(width = 800, height = 700, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+                        title=(f"""
+                        Intenção de voto 'geral' e de '{genero}' por candidato segundo '{inst.title()}' (1º turno)
+                        <br>
+                        <br>
+                        """),
+                                        xaxis_title='Mês, ano e instituto de pesquisa',
+                                        yaxis_title='Intenção de voto (%)',
+                                        font=dict(family="arial",size=13),
+                                        legend=dict(
+                            yanchor="auto",
+                            y=1.13,
+                            xanchor="auto",
+                            x=0.4,
+                            orientation="h",
+                            font_family="arial",))
+                fig.update_xaxes(tickangle = 300,title_font_family="arial")
+                fig.update_yaxes(range=[0,70])
 
-                plt.plot(df[df['nome_instituto']==inst].bol_m_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[df['nome_instituto']==inst].ciro_m_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
-
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-                #axes = plt.gca()
-                #axes.xaxis.grid()
-
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-                st.pyplot(plt)
-
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+                # Add image
+                fig.add_layout_image(
+                    dict(
+                        source=agre,
+                        xref="paper", yref="paper",
+                        x=.99, y=1.08,
+                        sizex=0.14, sizey=0.14,
+                        xanchor="right", yanchor="bottom"
+                    )
+                )
+                
+                st.plotly_chart(fig)
+               
         
         st.markdown(f"""
-        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de gênero. No entanto, nem todos os institutos divulgam tais informações. Assim, se a combinação selecionada retornar apenas os dados de intenção de voto geral, isso significa, que o instituto selecionado não disponibizou a informação em seu boletim público.</h7>
+        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de gênero. No entanto, nem todos os institutos coletam tais informações. Assim, se a combinação selecionada retornar apenas os dados de intenção de voto geral, isso significa, que o instituto selecionado não coletou a informação.</h7>
         """, unsafe_allow_html=True)
-    st.markdown("---")
 
 
 ###########################
@@ -1986,251 +1849,113 @@ if options_turn == 'Primeiro Turno':
 
         with col2:
 
-            # if raça4 == ' Parda ':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Rejeição de 'Pardos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_par_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_par_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_par_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_par_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça4 == ' Branca ':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Rejeição de 'Brancos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_bra_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_bra_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_bra_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_bra_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça4 == ' Preta ':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Rejeição de 'Pretos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_pre_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_pre_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_pre_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_pre_rej_1t")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça4 == ' Outras ':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Rejeição de 'outras' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_out_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_out_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_out_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
             if raça4 == ' Homens ':
 
-                df.set_index('sigla',inplace = True)
+                fonte = df.query(f"nome_instituto =='{inst}'")
+                genero_escolhido = 'h'
+                genero = 'homens'
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Rejeição de 'Homens' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[df['nome_instituto']==inst].lul_h_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
-                plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                fig = go.Figure()
+                ##lula
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'lul_{genero_escolhido}_rej_1t'], mode='lines+markers', name=f"Lula - {genero}",
+                                        line=dict(color='firebrick', width=2.5),legendrank=1))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['lul_ger_rej_1t'],mode='lines+markers', name=f"Lula - geral", 
+                                        line=dict(color='firebrick', width=1, dash='dot'),legendrank=2))
+                ##bolsonaro
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'bol_{genero_escolhido}_rej_1t'], mode='lines+markers', name=f"Bolsonaro - {genero}",
+                                        line=dict(color='royalblue', width=2.5),legendrank=3))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['bol_ger_rej_1t'],mode='lines+markers', name=f"Bolsonaro - geral", 
+                                        line=dict(color='royalblue', width=1, dash='dot'),legendrank=4))
+                
+                fig.update_layout(width = 800, height = 700, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+                        title=(f"""
+                        Rejeição 'geral' e de '{genero}' por candidato segundo '{inst.title()}' (1º turno)
+                        <br>
+                        <br>
+                        """),
+                                        xaxis_title='Mês, ano e instituto de pesquisa',
+                                        yaxis_title='Intenção de voto (%)',
+                                        font=dict(family="arial",size=13),
+                                        legend=dict(
+                            yanchor="auto",
+                            y=1.13,
+                            xanchor="auto",
+                            x=0.4,
+                            orientation="h",
+                            font_family="arial",))
+                fig.update_xaxes(tickangle = 300,title_font_family="arial")
+                fig.update_yaxes(range=[0,70])
 
-                plt.plot(df[df['nome_instituto']==inst].bol_h_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
-                plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[df['nome_instituto']==inst].ciro_h_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_homens")
-                plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+                # Add image
+                fig.add_layout_image(
+                    dict(
+                        source=agre,
+                        xref="paper", yref="paper",
+                        x=.99, y=1.08,
+                        sizex=0.14, sizey=0.14,
+                        xanchor="right", yanchor="bottom"
+                    )
+                )
+                
+                st.plotly_chart(fig)
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
-
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-                #axes = plt.gca()
-                #axes.xaxis.grid()
-
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-                st.pyplot(plt)
-
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
 
             if raça4 == ' Mulheres ':
 
-                df.set_index('sigla',inplace = True)
+                fonte = df.query(f"nome_instituto =='{inst}'")
+                genero_escolhido = 'm'
+                genero = 'mulheres'
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Rejeição de 'Mulheres' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[df['nome_instituto']==inst].lul_m_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                fig = go.Figure()
+                ##lula
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'lul_{genero_escolhido}_rej_1t'], mode='lines+markers', name=f"Lula - {genero}",
+                                        line=dict(color='firebrick', width=2.5),legendrank=1))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['lul_ger_rej_1t'],mode='lines+markers', name=f"Lula - geral", 
+                                        line=dict(color='firebrick', width=1, dash='dot'),legendrank=2))
+                ##bolsonaro
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'bol_{genero_escolhido}_rej_1t'], mode='lines+markers', name=f"Bolsonaro - {genero}",
+                                        line=dict(color='royalblue', width=2.5),legendrank=3))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['bol_ger_rej_1t'],mode='lines+markers', name=f"Bolsonaro - geral", 
+                                        line=dict(color='royalblue', width=1, dash='dot'),legendrank=4))
+                
+                fig.update_layout(width = 800, height = 700, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+                        title=(f"""
+                        Rejeição 'geral' e de '{genero}' por candidato segundo '{inst.title()}' (1º turno)
+                        <br>
+                        <br>
+                        """),
+                                        xaxis_title='Mês, ano e instituto de pesquisa',
+                                        yaxis_title='Intenção de voto (%)',
+                                        font=dict(family="arial",size=13),
+                                        legend=dict(
+                            yanchor="auto",
+                            y=1.13,
+                            xanchor="auto",
+                            x=0.4,
+                            orientation="h",
+                            font_family="arial",))
+                fig.update_xaxes(tickangle = 300,title_font_family="arial")
+                fig.update_yaxes(range=[0,70])
 
-                plt.plot(df[df['nome_instituto']==inst].bol_m_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[df['nome_instituto']==inst].ciro_m_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
-
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
-
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-                #axes = plt.gca()
-                #axes.xaxis.grid()
-
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-                st.pyplot(plt)
-
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+                # Add image
+                fig.add_layout_image(
+                    dict(
+                        source=agre,
+                        xref="paper", yref="paper",
+                        x=.99, y=1.08,
+                        sizex=0.14, sizey=0.14,
+                        xanchor="right", yanchor="bottom"
+                    )
+                )
+                
+                st.plotly_chart(fig)
+               
         
         st.markdown(f"""
-        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de rejição por raça e gênero. No entanto, nem todos os institutos coletam tais informações a partir da amostra de racial, sendo mais abundantes os dados sobre gênero.</h7>
+        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de gênero. No entanto, nem todos os institutos coletam tais informações. Assim, se a combinação selecionada retornar apenas os dados da rejeição geral, isso significa, que o instituto selecionado não coletou a informação.</h7>
         """, unsafe_allow_html=True)
-    st.markdown("---")
-
 
 
 #############################################################################################################################
@@ -2495,7 +2220,24 @@ if options_turn == 'Segundo Turno':
                        ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+        ## Brancos, Nulos 
+
+        fig.add_trace(go.Scatter(y=df.bra_nulo_m_2t, x=df.sigla, mode='markers', name='Brancos e nulos',
+                                marker=dict(
+                                size=5,
+                                color=df.bra_nulo_m_2t, #set color equal to a variable
+                                colorscale='gray')))
+
+        fig.add_trace(go.Scatter(y=df[df['bra_nulo_m_2t']>1].bra_nulo_m_2t.rolling(m_m).mean(), x=df[df['bra_nulo_m_2t']>1].sigla, mode='lines', name='Brancos e nulos',
+                                line=dict(color='gray', width=2.5)))
+
+        fig.add_annotation(x=list(df[df['bra_nulo_m_2t']>1].sigla)[-1], y=list(df[df['bra_nulo_m_2t']>1].bra_nulo_m_2t.rolling(m_m).mean())[-1] ,text=f"{int(list(df[df['bra_nulo_m_2t']>1].bra_nulo_m_2t.rolling(m_m).mean())[-1])}%",
+                    showarrow=True,
+                    arrowhead=1,
+                    ax = 40, ay = -8,
+                    font=dict(size=20, color="black", family="Arial"))
+
+        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=2, t=150),
         title=("""
         Média móvel das intenções de voto de <i>mulheres</i> por candidato à presidência - 2º turno<br>
         """),
@@ -2504,14 +2246,14 @@ if options_turn == 'Segundo Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-                y=1.15,
-                xanchor="auto",
-                x=0.5,
-                orientation="h",
-                font_family="arial",))
+            y=1.12,
+            xanchor="auto",
+            x=0.4,
+            orientation="h",
+            font_family="arial"))
 
-        fig.add_annotation(x="mar/22_poderdata_3", y=22,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        fig.add_annotation(x="mai/22_poderdata_2", y=25,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="mar/22_poderdata_3", y=30,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="mai/22_poderdata_2", y=30,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
         fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
 
@@ -2570,6 +2312,23 @@ if options_turn == 'Segundo Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
 
+        ## Brancos, Nulos 
+
+        fig.add_trace(go.Scatter(y=df.bra_nulo_h_2t, x=df.sigla, mode='markers', name='Brancos e nulos',
+                                marker=dict(
+                                size=5,
+                                color=df.bra_nulo_h_2t, #set color equal to a variable
+                                colorscale='gray')))
+
+        fig.add_trace(go.Scatter(y=df[df['bra_nulo_h_2t']>1].bra_nulo_h_2t.rolling(m_m).mean(), x=df[df['bra_nulo_h_2t']>1].sigla, mode='lines', name='Brancos e nulos',
+                                line=dict(color='gray', width=2.5)))
+
+        fig.add_annotation(x=list(df[df['bra_nulo_h_2t']>1].sigla)[-1], y=list(df[df['bra_nulo_h_2t']>1].bra_nulo_h_2t.rolling(m_m).mean())[-1] ,text=f"{int(list(df[df['bra_nulo_h_2t']>1].bra_nulo_h_2t.rolling(m_m).mean())[-1])}%",
+                    showarrow=True,
+                    arrowhead=1,
+                    ax = 40, ay = -8,
+                    font=dict(size=20, color="black", family="Arial"))
+
         fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
         Média móvel das intenções de voto de <i>homens</i> por candidato à presidência - 2º turno<br>
@@ -2579,14 +2338,14 @@ if options_turn == 'Segundo Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-                y=1.15,
+                y=1.12,
                 xanchor="auto",
-                x=0.5,
+                x=0.4,
                 orientation="h",
                 font_family="arial",))
 
-        fig.add_annotation(x="mar/22_poderdata_3", y=33,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        fig.add_annotation(x="mai/22_poderdata_2", y=35,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="mar/22_poderdata_3", y=40,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="mai/22_poderdata_2", y=40,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
         fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
 
@@ -2596,7 +2355,7 @@ if options_turn == 'Segundo Turno':
                 source=agre,
                 xref="paper", yref="paper",
                 x=.99, y=1.20,
-                sizex=0.12, sizey=0.12,
+                sizex=0.14, sizey=0.14,
                 xanchor="right", yanchor="bottom"
             )
         )
@@ -2628,7 +2387,7 @@ if options_turn == 'Segundo Turno':
 
         col, col1 = st.columns(2)
         with col:
-            inst = st.selectbox('Selecione o instituto de pesquisa:',options=institutos)
+            inst2 = st.selectbox('Selecione o instituto de pesquisa:',options=institutos)
         with col1:
             ## drop'  Parda', '  Branca', '  Preta', '  Outras', 
             raça6 = st.selectbox('Escolha o gênero:',options=['  --Selecione uma opção--  ','  Mulheres', '  Homens'])
@@ -2636,227 +2395,111 @@ if options_turn == 'Segundo Turno':
         col1, col2, col3 = st.columns([.5,3,.5])
 
         with col2:
-            # if raça6 == '  Parda':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'Pardos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_par_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_2t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_par_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_2t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça6 == '  Branca':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'Brancos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_bra_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_2t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_bra_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_2t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça6 == '  Preta':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'Pretos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_pre_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_2t")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_pre_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_2t")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
-
-            # if raça6 == '  Outras':
-
-            #     df.set_index('sigla',inplace = True)
-
-            #     plt.rcParams['figure.figsize'] = (12,7)
-            #     plt.title(f"\n Intenção de voto de 'outras' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-            #     plt.plot(df[df['nome_instituto']==inst].lul_out_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
-
-            #     plt.plot(df[df['nome_instituto']==inst].bol_out_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
-            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
-
-            #     plt.style.use('ggplot')
-            #     plt.xlabel('mês/ano e instituto de pesquisa')
-            #     plt.xticks(rotation=80,fontsize=12)
-            #     plt.yticks(fontsize=14)
-            #     plt.ylabel('Intenção de voto em %')
-            #     plt.rcParams.update({'axes.facecolor':'white'})
-
-            #     plt.grid(color='black', linestyle='-', linewidth=.08)
-            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-            #     #axes = plt.gca()
-            #     #axes.xaxis.grid()
-
-            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-            #     st.pyplot(plt)
-
-            #     with open(f"grafico.png", "rb") as file:
-            #         st.download_button(
-            #                 label="Baixar o gráfico",
-            #                 data=file,
-            #                 file_name="grafico.png",
-            #                 mime="image/png"
-            #                 )
+            
 
             if raça6 == '  Homens':
 
-                df.set_index('sigla',inplace = True)
+                fonte = df.query(f"nome_instituto =='{inst2}'")
+                genero_escolhido = 'h'
+                genero = 'homens'
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Homens' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[df['nome_instituto']==inst].lul_h_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
-                plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                fig = go.Figure()
+                ##lula
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'lul_{genero_escolhido}_2t'], mode='lines+markers', name=f"Lula - {genero}",
+                                        line=dict(color='firebrick', width=2.5),legendrank=1))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['lul_ger_2t'],mode='lines+markers', name=f"Lula - geral", 
+                                        line=dict(color='firebrick', width=1, dash='dot'),legendrank=2))
+                ##bolsonaro
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'bol_{genero_escolhido}_2t'], mode='lines+markers', name=f"Bolsonaro - {genero}",
+                                        line=dict(color='royalblue', width=2.5),legendrank=3))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['bol_ger_2t'],mode='lines+markers', name=f"Bolsonaro - geral", 
+                                        line=dict(color='royalblue', width=1, dash='dot'),legendrank=4))
+                
+                fig.update_layout(width = 800, height = 700, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+                        title=(f"""
+                        Intenção de voto 'geral' e de '{genero}' por candidato segundo '{inst2.title()}' (2º turno)
+                        <br>
+                        <br>
+                        """),
+                                        xaxis_title='Mês, ano e instituto de pesquisa',
+                                        yaxis_title='Intenção de voto (%)',
+                                        font=dict(family="arial",size=13),
+                                        legend=dict(
+                            yanchor="auto",
+                            y=1.13,
+                            xanchor="auto",
+                            x=0.4,
+                            orientation="h",
+                            font_family="arial",))
+                fig.update_xaxes(tickangle = 300,title_font_family="arial")
+                fig.update_yaxes(range=[0,70])
 
-                plt.plot(df[df['nome_instituto']==inst].bol_h_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
-                plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+                # Add image
+                fig.add_layout_image(
+                    dict(
+                        source=agre,
+                        xref="paper", yref="paper",
+                        x=.99, y=1.08,
+                        sizex=0.14, sizey=0.14,
+                        xanchor="right", yanchor="bottom"
+                    )
+                )
+                
+                st.plotly_chart(fig)
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-                #axes = plt.gca()
-                #axes.xaxis.grid()
-
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-                st.pyplot(plt)
-
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
 
             if raça6 == '  Mulheres':
 
-                df.set_index('sigla',inplace = True)
+                fonte = df.query(f"nome_instituto =='{inst2}'")
+                genero_escolhido = 'm'
+                genero = 'mulheres'
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Mulheres' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[df['nome_instituto']==inst].lul_m_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                fig = go.Figure()
+                ##lula
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'lul_{genero_escolhido}_2t'], mode='lines+markers', name=f"Lula - {genero}",
+                                        line=dict(color='firebrick', width=2.5),legendrank=1))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['lul_ger_2t'],mode='lines+markers', name=f"Lula - geral", 
+                                        line=dict(color='firebrick', width=1, dash='dot'),legendrank=2))
+                ##bolsonaro
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte[f'bol_{genero_escolhido}_2t'], mode='lines+markers', name=f"Bolsonaro - {genero}",
+                                        line=dict(color='royalblue', width=2.5),legendrank=3))
+                fig.add_trace(go.Scatter(x=fonte['sigla'], y=fonte['bol_ger_2t'],mode='lines+markers', name=f"Bolsonaro - geral", 
+                                        line=dict(color='royalblue', width=1, dash='dot'),legendrank=4))
+                
+                fig.update_layout(width = 800, height = 700, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+                        title=(f"""
+                        Intenção de voto 'geral' e de '{genero}' por candidato segundo '{inst2.title()}' (2º turno)
+                        <br>
+                        <br>
+                        """),
+                                        xaxis_title='Mês, ano e instituto de pesquisa',
+                                        yaxis_title='Intenção de voto (%)',
+                                        font=dict(family="arial",size=13),
+                                        legend=dict(
+                            yanchor="auto",
+                            y=1.13,
+                            xanchor="auto",
+                            x=0.4,
+                            orientation="h",
+                            font_family="arial",))
+                fig.update_xaxes(tickangle = 300,title_font_family="arial")
+                fig.update_yaxes(range=[0,70])
 
-                plt.plot(df[df['nome_instituto']==inst].bol_m_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
-                plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
-
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
-
-                #axes = plt.gca()
-                #axes.xaxis.grid()
-
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
-
-                st.pyplot(plt)
-
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+                # Add image
+                fig.add_layout_image(
+                    dict(
+                        source=agre,
+                        xref="paper", yref="paper",
+                        x=.99, y=1.08,
+                        sizex=0.14, sizey=0.14,
+                        xanchor="right", yanchor="bottom"
+                    )
+                )
+                
+                st.plotly_chart(fig)
+               
         
         st.markdown(f"""
         <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de gênero. No entanto, nem todos os institutos coletam tais informações. Assim, se a combinação selecionada retornar apenas os dados de intenção de voto geral, isso significa, que o instituto selecionado não coletou a informação.</h7>
