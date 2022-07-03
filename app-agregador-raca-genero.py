@@ -50,7 +50,7 @@ st.set_page_config(
 #     st.image(image, width=800)
 
 st.markdown("""
-<h2 style='text-align: center; color:#202020;font-family:helvetica'>Agregador de pesquisas eleitorais por gênero e raça</h2>
+<h2 style='text-align: center; color:#202020;font-family:helvetica'>Agregador de pesquisas eleitorais por gênero</h2>
 <br>
 <h4 style='text-align: center; color:#54595F;font-family:Segoe UI, sans-serif'>Consolidação de pesquisas para as eleições presidenciais de 2022</h4>
 """, unsafe_allow_html=True)
@@ -81,11 +81,18 @@ end_date = dt.datetime.today() # data atual
 start_date = dt.datetime(2022,1,1) # data de oito meses atras
 
 ### dados pesquisas
-df = pd.read_excel('banco_raca_genero_fgv.xlsx')
-#df.sigla = df['sigla'].astype(str)
+@st.cache(allow_output_mutation=True)
+def load_data():
+    df = pd.read_excel('banco_raca_genero_fgv.xlsx')
+    return df
+df = load_data()
 
 ##import image logo
-agre = Image.open('fgv-logo.jpg')
+@st.cache(allow_output_mutation=True)
+def load_image():
+    agre = Image.open('fgv-logo.jpg')
+    return agre
+agre = load_image()
 
 ########################################################################
 #### seletor para escolher o perído do primeiro ou do segundo turno#####
@@ -135,20 +142,20 @@ if options_turn == 'Primeiro Turno':
 
             ## coluna 1
             lul = Image.open('lula-oculos.jpg')
-            col0,col, col1, col2, col3 = st.columns(5)
+            col0,col, col1, col2 = st.columns(4)
             col0.image(lul,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['lul_ger_1t']>1].lul_ger_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['lul_ger_1t']>1].lul_ger_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1),1)}%")
             col1.metric(label="Homem", value=f"{round(list(df[df['lul_h_1t']>1].lul_h_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['lul_cat_1t']>1].lul_cat_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_cat_1t']>1].bol_cat_1t.rolling(m_m).mean())[-1],1)}")
             col2.metric(label="Mulher", value=f"{round(list(df[df['lul_m_1t']>1].lul_m_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['lul_ev_1t']>1].lul_ev_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ev_1t']>1].bol_ev_1t.rolling(m_m).mean())[-1],1),1)}")
-            col3.metric(label="Pardo", value=f"{round(list(df[df['lul_par_1t']>1].lul_par_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col3.metric(label="Pardo", value=f"{round(list(df[df['lul_par_1t']>1].lul_par_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
 
-            ## coluna 2
-            col5, col6, col7, col8, col9 = st.columns(5)
-            col5.metric(label="",value="")
-            col6.metric(label="Branco", value=f"{round(list(df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['lul_non_1t']>1].lul_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
-            col7.metric(label="Preto", value=f"{round(list(df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['lul_espi_1t']>1].lul_espi_1t.rolling(m_m).mean())[-1],1),1)}")
-            col8.metric(label="Amarelo", value=f"{round(list(df[df['lul_amar_1t']>1].lul_amar_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_ateu_1t']>1].lul_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
-            col9.metric(label="Outros", value=f"{round(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_umb_can_1t']>1].lul_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
+            # ## coluna 2
+            # col5, col6, col7, col8, col9 = st.columns(5)
+            # col5.metric(label="",value="")
+            # col6.metric(label="Branco", value=f"{round(list(df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['lul_non_1t']>1].lul_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
+            # col7.metric(label="Preto", value=f"{round(list(df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['lul_espi_1t']>1].lul_espi_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col8.metric(label="Amarelo", value=f"{round(list(df[df['lul_amar_1t']>1].lul_amar_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_ateu_1t']>1].lul_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col9.metric(label="Outros", value=f"{round(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_umb_can_1t']>1].lul_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
             
             ## info
             st.markdown("---")
@@ -159,20 +166,20 @@ if options_turn == 'Primeiro Turno':
 
             ## coluna 1
             bol = Image.open('bolsonaro_capacete.jpg')
-            col0,col, col1, col2, col3 = st.columns(5)
+            col0,col, col1, col2 = st.columns(4)
             col0.image(bol,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1),1)}%")
             col1.metric(label="Homem", value=f"{round(list(df[df['bol_h_1t']>1].bol_h_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['bol_cat_1t']>1].bol_cat_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_cat_1t']>1].bol_cat_1t.rolling(m_m).mean())[-1],1)}")
             col2.metric(label="Mulher", value=f"{round(list(df[df['bol_m_1t']>1].bol_m_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['bol_ev_1t']>1].bol_ev_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ev_1t']>1].bol_ev_1t.rolling(m_m).mean())[-1],1),1)}")
-            col3.metric(label="Pardo", value=f"{round(list(df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col3.metric(label="Pardo", value=f"{round(list(df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
 
-            ## coluna 2
-            col5, col6, col7, col8, col9 = st.columns(5)
-            col5.metric(label="",value="")
-            col6.metric(label="Branco", value=f"{round(list(df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
-            col7.metric(label="Preto", value=f"{round(list(df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1),1)}")
-            col8.metric(label="Amarelo", value=f"{round(list(df[df['bol_amar_1t']>1].bol_amar_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
-            col9.metric(label="Outros", value=f"{round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
+            # ## coluna 2
+            # col5, col6, col7, col8, col9 = st.columns(5)
+            # col5.metric(label="",value="")
+            # col6.metric(label="Branco", value=f"{round(list(df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
+            # col7.metric(label="Preto", value=f"{round(list(df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col8.metric(label="Amarelo", value=f"{round(list(df[df['bol_amar_1t']>1].bol_amar_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col9.metric(label="Outros", value=f"{round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
             
             ## info
             st.markdown("---")
@@ -183,25 +190,25 @@ if options_turn == 'Primeiro Turno':
 
             ## coluna 1
             ciro = Image.open('ciro_oculos.jpg')
-            col0,col, col1, col2, col3 = st.columns(5)
+            col0,col, col1, col2 = st.columns(4)
             col0.image(ciro,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['ciro_ger_1t']>1].ciro_ger_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['ciro_ger_1t']>1].ciro_ger_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ger_1t']>1].ciro_ger_1t.rolling(m_m).mean())[-1],1),1)}%")
             col1.metric(label="Homem", value=f"{round(list(df[df['ciro_h_1t']>1].ciro_h_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['ciro_cat_1t']>1].ciro_cat_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_cat_1t']>1].ciro_cat_1t.rolling(m_m).mean())[-1],1)}")
             col2.metric(label="Mulher", value=f"{round(list(df[df['ciro_m_1t']>1].ciro_m_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['ciro_ev_1t']>1].ciro_ev_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ev_1t']>1].ciro_ev_1t.rolling(m_m).mean())[-1],1),1)}")
-            col3.metric(label="Pardo", value=f"{round(list(df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col3.metric(label="Pardo", value=f"{round(list(df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1),1)}")
 
-            ## coluna 2
-            col5, col6, col7, col8, col9 = st.columns(5)
-            col5.metric(label="",value="")
-            col6.metric(label="Branco", value=f"{round(list(df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1)}")
-            col7.metric(label="Preto", value=f"{round(list(df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1),1)}")
-            col8.metric(label="Amarelo", value=f"{round(list(df[df['ciro_amar_1t']>1].ciro_amar_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
-            col9.metric(label="Outros", value=f"{round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
+            # ## coluna 2
+            # col5, col6, col7, col8, col9 = st.columns(5)
+            # col5.metric(label="",value="")
+            # col6.metric(label="Branco", value=f"{round(list(df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1)}")
+            # col7.metric(label="Preto", value=f"{round(list(df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col8.metric(label="Amarelo", value=f"{round(list(df[df['ciro_amar_1t']>1].ciro_amar_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col9.metric(label="Outros", value=f"{round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
             
 
         st.markdown(f"""
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado para o cálculo: média móvel de {m_m} dias.</h7><br>
-        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Os valores indicados no resumo correspondem a última média da série temporal registrada no dia <i>{list(df.data)[-1].strftime(format='%d-%m-%Y')}</i></h7><br>
+        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Os valores indicados no resumo correspondem a última média móvel da série temporal registrada no dia <i>{list(df.data)[-1].strftime(format='%d-%m-%Y')}</i></h7><br>
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 3: Para o cálculo da média móvel da intenção de voto geral utilizamos {len(df[df['lul_ger_1t']>1])} pesquisas eleitorais.</h7><br>
         """, unsafe_allow_html=True)
 
@@ -275,6 +282,40 @@ if options_turn == 'Primeiro Turno':
                         ax = 40, ay = 0,
                         font=dict(size=20, color="black", family="Arial"))
 
+            ## Brancos e Nulos e não sabe e não respondeu
+
+            fig.add_trace(go.Scatter(y=df.bra_nul_ns_nr_ger_1t, x=df.sigla, mode='markers', name='brancos_nulos_ns_nr',
+                                    marker=dict(
+                                    size=5,
+                                    color=df.bra_nul_ns_nr_ger_1t, #set color equal to a variable
+                                    colorscale='Greys')))
+
+            fig.add_trace(go.Scatter(y=df[df['bra_nul_ns_nr_ger_1t']>1].bra_nul_ns_nr_ger_1t.rolling(m_m).mean(), x=df[df['bra_nul_ns_nr_ger_1t']>1].sigla, mode='lines', name='Brancos, nulos, NS e NR',
+                                    line=dict(color='grey', width=2.5)))
+
+            fig.add_annotation(x=list(df.sigla)[-1], y=int(list(df.bra_nul_ns_nr_ger_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df.bra_nul_ns_nr_ger_1t.rolling(m_m).mean())[-1])}%",
+                        showarrow=True,
+                        arrowhead=1,
+                        ax = 40, ay = -8,
+                        font=dict(size=20, color="black", family="Arial"))
+
+            # ## Brancos e Nulos
+
+            # fig.add_trace(go.Scatter(y=df.bra_nulo_ger_1t, x=df.sigla, mode='markers', name='brancos_nulos_ns_nr',
+            #                         marker=dict(
+            #                         size=5,
+            #                         color=df.bra_nulo_ger_1t, #set color equal to a variable
+            #                         colorscale='Greys')))
+
+            # fig.add_trace(go.Scatter(y=df[df['bra_nulo_ger_1t']>1].bra_nulo_ger_1t.rolling(m_m).mean(), x=df[df['bra_nulo_ger_1t']>1].sigla, mode='lines', name='Brancos, nulos, NS e NR',
+            #                         line=dict(color='grey', width=2.5)))
+
+            # fig.add_annotation(x=list(df[df['bra_nulo_ger_1t']>1].sigla)[-1], y=int(list(df[df['bra_nulo_ger_1t']>1].bra_nulo_ger_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df.bra_nulo_ger_1t.rolling(m_m).mean())[-1])}%",
+            #             showarrow=True,
+            #             arrowhead=1,
+            #             ax = 40, ay = -8,
+            #             font=dict(size=20, color="black", family="Arial"))
+
             fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
             title=("""
             <i>Média móvel das intenções de voto de candidatos à presidência - 1º turno<i><br>
@@ -284,7 +325,7 @@ if options_turn == 'Primeiro Turno':
                             font=dict(family="arial",size=13),
                             legend=dict(
                 yanchor="auto",
-                y=1.1,
+                y=1.15,
                 xanchor="auto",
                 x=0.5,
                 orientation="h",
@@ -335,10 +376,10 @@ if options_turn == 'Primeiro Turno':
 
         fig = go.Figure()
         ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_m_1t']>1].lul_m_1t, x=df[df['lul_m_1t']>1].sigla, mode='markers', name='int_voto_lula',
+        fig.add_trace(go.Scatter(y=df.lul_m_1t, x=df.sigla, mode='markers', name='int_voto_lula',
                                 marker=dict(
                                 size=5,
-                                color=df[df['lul_m_1t']>1].lul_m_1t, #set color equal to a variable
+                                color=df.lul_m_1t, #set color equal to a variable
                                 colorscale='peach')))
 
         fig.add_trace(go.Scatter(y=df[df['lul_m_1t']>1].lul_m_1t.rolling(m_m).mean(), x=df[df['bol_m_1t']>1].sigla,mode='lines', name='Lula',
@@ -351,10 +392,10 @@ if options_turn == 'Primeiro Turno':
                     font=dict(size=20, color="black", family="Arial"))
 
         ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_m_1t']>1].bol_m_1t, x=df[df['bol_m_1t']>1].sigla, mode='markers', name='int_voto_bolsonaro',
+        fig.add_trace(go.Scatter(y=df.bol_m_1t, x=df.sigla, mode='markers', name='int_voto_bolsonaro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['bol_m_1t']>1].lul_m_1t, #set color equal to a variable
+                                color=df.bol_m_1t, #set color equal to a variable
                                 colorscale='ice')))
 
         fig.add_trace(go.Scatter(y=df[df['bol_m_1t']>1].bol_m_1t.rolling(m_m).mean(), x=df[df['bol_m_1t']>1].sigla,mode='lines', name='Bolsonaro',
@@ -367,10 +408,10 @@ if options_turn == 'Primeiro Turno':
                     font=dict(size=20, color="black", family="Arial"))
 
         ## Ciro
-        fig.add_trace(go.Scatter(y=df[df['ciro_m_1t']>1].ciro_m_1t, x=df[df['ciro_m_1t']>1].sigla, mode='markers', name='int_voto_ciro',
+        fig.add_trace(go.Scatter(y=df.ciro_m_1t, x=df.sigla, mode='markers', name='int_voto_ciro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['ciro_m_1t']>1].ciro_m_1t, #set color equal to a variable
+                                color=df.ciro_m_1t, #set color equal to a variable
                                 colorscale='Aggrnyl')))
 
         fig.add_trace(go.Scatter(y=df[df['ciro_m_1t']>1].ciro_m_1t.rolling(m_m).mean(), x=df[df['ciro_m_1t']>1].sigla, mode='lines', name='Ciro Gomes',
@@ -379,10 +420,27 @@ if options_turn == 'Primeiro Turno':
         fig.add_annotation(x=list(df[df['ciro_m_1t']>1].sigla)[-1], y=int(list(df[df['ciro_m_1t']>1].ciro_m_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_m_1t']>1].ciro_m_1t.rolling(m_m).mean())[-1])}%",
                     showarrow=True,
                     arrowhead=1,
-                    ax = 40, ay = 0,
+                    ax = 40, ay = -8,
                     font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+        ## Brancos e Nulos
+
+        fig.add_trace(go.Scatter(y=df.bra_nulo_m_1t, x=df.sigla, mode='markers', name='brancos_nulos_ns_nr',
+                                marker=dict(
+                                size=5,
+                                color=df.bra_nulo_m_1t, #set color equal to a variable
+                                colorscale='Greys')))
+
+        fig.add_trace(go.Scatter(y=df[df['bra_nulo_m_1t']>1].bra_nulo_m_1t.rolling(m_m).mean(), x=df[df['bra_nulo_m_1t']>1].sigla, mode='lines', name='Brancos, nulos, NS e NR',
+                                line=dict(color='grey', width=2.5)))
+
+        fig.add_annotation(x=list(df[df['bra_nulo_m_1t']>1].sigla)[-1], y=int(list(df[df['bra_nulo_m_1t']>1].bra_nulo_m_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bra_nulo_m_1t']>1].bra_nulo_m_1t.rolling(m_m).mean())[-1])}%",
+                    showarrow=True,
+                    arrowhead=1,
+                    ax = 40, ay = 20,
+                    font=dict(size=20, color="black", family="Arial"))
+
+        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
         Média móvel das intenções de voto de <i>mulheres</i> por candidato à presidência - 1º turno<br>
         """),
@@ -391,11 +449,11 @@ if options_turn == 'Primeiro Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+                y=1.15,
+                xanchor="auto",
+                x=0.5,
+                orientation="h",
+                font_family="arial",))
 
         fig.add_annotation(x="mar/22_poderdata_3", y=22,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=25,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
@@ -427,10 +485,10 @@ if options_turn == 'Primeiro Turno':
 
         fig = go.Figure()
         ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_h_1t']>1].lul_h_1t, x=df[df['lul_h_1t']>1].sigla, mode='markers', name='int_vot_lula',
+        fig.add_trace(go.Scatter(y=df.lul_h_1t, x=df.sigla, mode='markers', name='int_vot_lula',
                                 marker=dict(
                                 size=5,
-                                color=df[df['lul_h_1t']>1].lul_h_1t, #set color equal to a variable
+                                color=df.lul_h_1t, #set color equal to a variable
                                 colorscale='peach')))
 
         fig.add_trace(go.Scatter(y=df[df['lul_h_1t']>1].lul_h_1t.rolling(m_m).mean(), x=df[df['bol_h_1t']>1].sigla,mode='lines', name='Lula',
@@ -442,10 +500,10 @@ if options_turn == 'Primeiro Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
         ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_h_1t']>1].bol_h_1t, x=df[df['bol_h_1t']>1].sigla, mode='markers', name='int_vot_bolsonaro',
+        fig.add_trace(go.Scatter(y=df.bol_h_1t, x=df.sigla, mode='markers', name='int_vot_bolsonaro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['bol_h_1t']>1].lul_h_1t, #set color equal to a variable
+                                color=df.bol_h_1t, #set color equal to a variable
                                 colorscale='ice')))
 
         fig.add_trace(go.Scatter(y=df[df['bol_h_1t']>1].bol_h_1t.rolling(m_m).mean(), x=df[df['bol_h_1t']>1].sigla,mode='lines', name='Bolsonaro',
@@ -457,10 +515,10 @@ if options_turn == 'Primeiro Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
         ## Ciro
-        fig.add_trace(go.Scatter(y=df[df['ciro_h_1t']>1].ciro_h_1t, x=df[df['ciro_h_1t']>1].sigla, mode='markers', name='int_vot_ciro',
+        fig.add_trace(go.Scatter(y=df.ciro_h_1t, x=df.sigla, mode='markers', name='int_vot_ciro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['ciro_h_1t']>1].ciro_h_1t, #set color equal to a variable
+                                color=df.ciro_h_1t, #set color equal to a variable
                                 colorscale='Aggrnyl')))
 
         fig.add_trace(go.Scatter(y=df[df['ciro_h_1t']>1].ciro_h_1t.rolling(m_m).mean(), x=df[df['ciro_h_1t']>1].sigla, mode='lines', name='Ciro Gomes',
@@ -469,10 +527,27 @@ if options_turn == 'Primeiro Turno':
         fig.add_annotation(x=list(df[df['ciro_h_1t']>1].sigla)[-1], y=int(list(df[df['ciro_h_1t']>1].ciro_h_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_h_1t']>1].ciro_h_1t.rolling(m_m).mean())[-1])}%",
                     showarrow=True,
                     arrowhead=1,
-                    ax = 40, ay = 0,
+                    ax = 40, ay = -8,
                     font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+        ## Brancos e Nulos
+
+        fig.add_trace(go.Scatter(y=df.bra_nulo_h_1t, x=df.sigla, mode='markers', name='brancos_nulos_ns_nr',
+                                marker=dict(
+                                size=5,
+                                color=df.bra_nulo_h_1t, #set color equal to a variable
+                                colorscale='Greys')))
+
+        fig.add_trace(go.Scatter(y=df[df['bra_nulo_h_1t']>1].bra_nulo_h_1t.rolling(m_m).mean(), x=df[df['bra_nulo_h_1t']>1].sigla, mode='lines', name='Brancos, nulos, NS e NR',
+                                line=dict(color='grey', width=2.5)))
+
+        fig.add_annotation(x=list(df[df['bra_nulo_h_1t']>1].sigla)[-1], y=int(list(df[df['bra_nulo_h_1t']>1].bra_nulo_h_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bra_nulo_h_1t']>1].bra_nulo_h_1t.rolling(m_m).mean())[-1])}%",
+                    showarrow=True,
+                    arrowhead=1,
+                    ax = 40, ay = 20,
+                    font=dict(size=20, color="black", family="Arial"))
+
+        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
         Média móvel das intenções de voto de <i>homens</i> por candidato à presidência - 1º turno<br>
         """),
@@ -481,11 +556,11 @@ if options_turn == 'Primeiro Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+                y=1.15,
+                xanchor="auto",
+                x=0.5,
+                orientation="h",
+                font_family="arial",))
 
         fig.add_annotation(x="mar/22_poderdata_3", y=33,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=35,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
@@ -517,353 +592,353 @@ if options_turn == 'Primeiro Turno':
     ## Intenção de voto por raça ##
     ###################################
 
-    with st.container():
-        st.markdown(f"""
-        <h3 style='text-align: left; color: #303030; font-family:Helvetica; text-rendering: optimizelegibility; background-color: #e6e6e6;'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 18">
-        <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-        </svg> Intenção de voto por raça:</h3><br>
-        """, unsafe_allow_html=True)
-        raça = st.selectbox('Selecione a raça:',options=['--Escolha a opção--','Parda', 'Branca', 'Preta', 'Outras'])
+    # with st.container():
+    #     st.markdown(f"""
+    #     <h3 style='text-align: left; color: #303030; font-family:Helvetica; text-rendering: optimizelegibility; background-color: #e6e6e6;'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 18">
+    #     <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+    #     </svg> Intenção de voto por raça:</h3><br>
+    #     """, unsafe_allow_html=True)
+    #     raça = st.selectbox('Selecione a raça:',options=['--Escolha a opção--','Parda', 'Branca', 'Preta', 'Outras'])
 
-    if raça == 'Parda':
+    # if raça == 'Parda':
 
-        fig = go.Figure()
-        ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_par_1t']>1].lul_par_1t, x=df[df['lul_par_1t']>1].sigla, mode='markers', name='int_vot_par_lula',
-                                marker=dict(
-                                size=5,
-                                color=df[df['lul_par_1t']>1].lul_par_1t, #set color equal to a variable
-                                colorscale='peach')))
+    #     fig = go.Figure()
+    #     ## lula
+    #     fig.add_trace(go.Scatter(y=df[df['lul_par_1t']>1].lul_par_1t, x=df[df['lul_par_1t']>1].sigla, mode='markers', name='int_vot_par_lula',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['lul_par_1t']>1].lul_par_1t, #set color equal to a variable
+    #                             colorscale='peach')))
 
-        fig.add_trace(go.Scatter(y=df[df['lul_par_1t']>1].lul_par_1t .rolling(m_m).mean(), x=df[df['bol_par_1t']>1].sigla,mode='lines', name='Lula',
-                                line=dict(color='firebrick', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['lul_par_1t']>1].lul_par_1t .rolling(m_m).mean(), x=df[df['bol_par_1t']>1].sigla,mode='lines', name='Lula',
+    #                             line=dict(color='firebrick', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['lul_par_1t']>1].sigla)[-1], y=int(list(df[df['lul_par_1t']>1].lul_par_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_par_1t']>1].lul_par_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['lul_par_1t']>1].sigla)[-1], y=int(list(df[df['lul_par_1t']>1].lul_par_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_par_1t']>1].lul_par_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_par_1t']>1].bol_par_1t, x=df[df['bol_par_1t']>1].sigla, mode='markers', name='int_vot_par_bolsonaro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['bol_par_1t']>1].lul_par_1t, #set color equal to a variable
-                                colorscale='ice')))
+    #     ## Bolsonaro
+    #     fig.add_trace(go.Scatter(y=df[df['bol_par_1t']>1].bol_par_1t, x=df[df['bol_par_1t']>1].sigla, mode='markers', name='int_vot_par_bolsonaro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['bol_par_1t']>1].lul_par_1t, #set color equal to a variable
+    #                             colorscale='ice')))
 
-        fig.add_trace(go.Scatter(y=df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean(), x=df[df['bol_par_1t']>1].sigla,mode='lines', name='Bolsonaro',
-                                line=dict(color='skyblue', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean(), x=df[df['bol_par_1t']>1].sigla,mode='lines', name='Bolsonaro',
+    #                             line=dict(color='skyblue', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['bol_par_1t']>1].sigla)[-1], y=int(list(df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                       ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['bol_par_1t']>1].sigla)[-1], y=int(list(df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_par_1t']>1].bol_par_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                    ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        ## Ciro
+    #     ## Ciro
 
-        fig.add_trace(go.Scatter(y=df[df['ciro_par_1t']>1].ciro_par_1t, x=df[df['ciro_par_1t']>1].sigla, mode='markers', name='int_vot_par_ciro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['ciro_par_1t']>1].ciro_par_1t, #set color equal to a variable
-                                colorscale='Greens')))
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_par_1t']>1].ciro_par_1t, x=df[df['ciro_par_1t']>1].sigla, mode='markers', name='int_vot_par_ciro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['ciro_par_1t']>1].ciro_par_1t, #set color equal to a variable
+    #                             colorscale='Greens')))
 
-        fig.add_trace(go.Scatter(y=df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean(), x=df[df['ciro_par_1t']>1].sigla, mode='lines', name='Ciro Gomes',
-                                line=dict(color='seagreen', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean(), x=df[df['ciro_par_1t']>1].sigla, mode='lines', name='Ciro Gomes',
+    #                             line=dict(color='seagreen', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['ciro_par_1t']>1].sigla)[-1], y=int(list(df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['ciro_par_1t']>1].sigla)[-1], y=int(list(df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_par_1t']>1].ciro_par_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
-        title=("""
-        Média móvel das intenções de voto de <i>pardos</i> por candidato à presidência - 1º turno<br>
-        """),
-                        xaxis_title='Mês, ano e instituto de pesquisa',
-                        yaxis_title='Intenção de voto (%)',
-                        font=dict(family="arial",size=13),
-                        legend=dict(
-            yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+    #     fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+    #     title=("""
+    #     Média móvel das intenções de voto de <i>pardos</i> por candidato à presidência - 1º turno<br>
+    #     """),
+    #                     xaxis_title='Mês, ano e instituto de pesquisa',
+    #                     yaxis_title='Intenção de voto (%)',
+    #                     font=dict(family="arial",size=13),
+    #                     legend=dict(
+    #         yanchor="auto",
+    #             y=1.15,
+    #             xanchor="auto",
+    #             x=0.5,
+    #             orientation="h",
+    #             font_family="arial",))
 
-        fig.add_annotation(x="mar/22_poderdata_3", y=25,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        fig.add_annotation(x="mai/22_poderdata_2", y=28,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mar/22_poderdata_3", y=25,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mai/22_poderdata_2", y=28,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-        fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+    #     fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
 
-        # Add image
-        fig.add_layout_image(
-            dict(
-                source=agre,
-                xref="paper", yref="paper",
-                x=.99, y=1.20,
-                sizex=0.12, sizey=0.12,
-                xanchor="right", yanchor="bottom"
-            )
-        )
+    #     # Add image
+    #     fig.add_layout_image(
+    #         dict(
+    #             source=agre,
+    #             xref="paper", yref="paper",
+    #             x=.99, y=1.20,
+    #             sizex=0.12, sizey=0.12,
+    #             xanchor="right", yanchor="bottom"
+    #         )
+    #     )
 
-        st.plotly_chart(fig)
+    #     st.plotly_chart(fig)
 
-    if raça == 'Branca':
-        fig = go.Figure()
-        ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_bra_1t']>1].lul_bra_1t, x=df[df['lul_bra_1t']>1].sigla, mode='markers', name='int_vot_bra_lula',
-                                marker=dict(
-                                size=5,
-                                color=df[df['lul_bra_1t']>1].lul_bra_1t, #set color equal to a variable
-                                colorscale='peach')))
+    # if raça == 'Branca':
+    #     fig = go.Figure()
+    #     ## lula
+    #     fig.add_trace(go.Scatter(y=df[df['lul_bra_1t']>1].lul_bra_1t, x=df[df['lul_bra_1t']>1].sigla, mode='markers', name='int_vot_bra_lula',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['lul_bra_1t']>1].lul_bra_1t, #set color equal to a variable
+    #                             colorscale='peach')))
 
-        fig.add_trace(go.Scatter(y=df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean(), x=df[df['bol_bra_1t']>1].sigla,mode='lines', name='Lula',
-                                line=dict(color='firebrick', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean(), x=df[df['bol_bra_1t']>1].sigla,mode='lines', name='Lula',
+    #                             line=dict(color='firebrick', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['lul_bra_1t']>1].sigla)[-1], y=int(list(df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
-        ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_bra_1t']>1].bol_bra_1t, x=df[df['bol_bra_1t']>1].sigla, mode='markers', name='int_vot_bra_bolsonaro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['bol_bra_1t']>1].lul_bra_1t, #set color equal to a variable
-                                colorscale='ice')))
+    #     fig.add_annotation(x=list(df[df['lul_bra_1t']>1].sigla)[-1], y=int(list(df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_bra_1t']>1].lul_bra_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
+    #     ## Bolsonaro
+    #     fig.add_trace(go.Scatter(y=df[df['bol_bra_1t']>1].bol_bra_1t, x=df[df['bol_bra_1t']>1].sigla, mode='markers', name='int_vot_bra_bolsonaro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['bol_bra_1t']>1].lul_bra_1t, #set color equal to a variable
+    #                             colorscale='ice')))
 
-        fig.add_trace(go.Scatter(y=df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean(), x=df[df['bol_bra_1t']>1].sigla,mode='lines', name='Bolsonaro',
-                                line=dict(color='skyblue', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean(), x=df[df['bol_bra_1t']>1].sigla,mode='lines', name='Bolsonaro',
+    #                             line=dict(color='skyblue', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['bol_bra_1t']>1].sigla)[-1], y=int(list(df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
-        ## Ciro
-        fig.add_trace(go.Scatter(y=df[df['ciro_bra_1t']>1].ciro_bra_1t, x=df[df['ciro_bra_1t']>1].sigla, mode='markers', name='int_vot_bra_ciro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['ciro_bra_1t']>1].ciro_bra_1t, #set color equal to a variable
-                                colorscale='Greens')))
+    #     fig.add_annotation(x=list(df[df['bol_bra_1t']>1].sigla)[-1], y=int(list(df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_bra_1t']>1].bol_bra_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
+    #     ## Ciro
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_bra_1t']>1].ciro_bra_1t, x=df[df['ciro_bra_1t']>1].sigla, mode='markers', name='int_vot_bra_ciro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['ciro_bra_1t']>1].ciro_bra_1t, #set color equal to a variable
+    #                             colorscale='Greens')))
 
-        fig.add_trace(go.Scatter(y=df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean(), x=df[df['ciro_bra_1t']>1].sigla, mode='lines', name='Ciro Gomes',
-                                line=dict(color='seagreen', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean(), x=df[df['ciro_bra_1t']>1].sigla, mode='lines', name='Ciro Gomes',
+    #                             line=dict(color='seagreen', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['ciro_bra_1t']>1].sigla)[-1], y=int(list(df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['ciro_bra_1t']>1].sigla)[-1], y=int(list(df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_bra_1t']>1].ciro_bra_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
-        title=("""
-        Média móvel das intenções de voto de <i>brancos</i> por candidato à presidência - 1º turno<br>
-        """),
-                        xaxis_title='Mês, ano e instituto de pesquisa',
-                        yaxis_title='Intenção de voto (%)',
-                        font=dict(family="arial",size=13),
-                        legend=dict(
-            yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+    #     fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+    #     title=("""
+    #     Média móvel das intenções de voto de <i>brancos</i> por candidato à presidência - 1º turno<br>
+    #     """),
+    #                     xaxis_title='Mês, ano e instituto de pesquisa',
+    #                     yaxis_title='Intenção de voto (%)',
+    #                     font=dict(family="arial",size=13),
+    #                     legend=dict(
+    #         yanchor="auto",
+    #             y=1.15,
+    #             xanchor="auto",
+    #             x=0.5,
+    #             orientation="h",
+    #             font_family="arial",))
 
-        fig.add_annotation(x="mar/22_poderdata_3", y=28,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        fig.add_annotation(x="mai/22_poderdata_2", y=28,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mar/22_poderdata_3", y=28,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mai/22_poderdata_2", y=28,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-        fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+    #     fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
         
-        # Add image
-        fig.add_layout_image(
-            dict(
-                source=agre,
-                xref="paper", yref="paper",
-                x=.99, y=1.20,
-                sizex=0.12, sizey=0.12,
-                xanchor="right", yanchor="bottom"
-            )
-        )
+    #     # Add image
+    #     fig.add_layout_image(
+    #         dict(
+    #             source=agre,
+    #             xref="paper", yref="paper",
+    #             x=.99, y=1.20,
+    #             sizex=0.12, sizey=0.12,
+    #             xanchor="right", yanchor="bottom"
+    #         )
+    #     )
 
-        st.plotly_chart(fig)
+    #     st.plotly_chart(fig)
 
-    if raça == 'Preta':
-        fig = go.Figure()
-        ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_pre_1t']>1].lul_pre_1t, x=df[df['lul_pre_1t']>1].sigla, mode='markers', name='int_vot_lula',
-                                marker=dict(
-                                size=5,
-                                color=df[df['lul_pre_1t']>1].lul_pre_1t, #set color equal to a variable
-                                colorscale='peach')))
+    # if raça == 'Preta':
+    #     fig = go.Figure()
+    #     ## lula
+    #     fig.add_trace(go.Scatter(y=df[df['lul_pre_1t']>1].lul_pre_1t, x=df[df['lul_pre_1t']>1].sigla, mode='markers', name='int_vot_lula',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['lul_pre_1t']>1].lul_pre_1t, #set color equal to a variable
+    #                             colorscale='peach')))
 
-        fig.add_trace(go.Scatter(y=df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean(), x=df[df['bol_pre_1t']>1].sigla,mode='lines', name='Lula',
-                                line=dict(color='firebrick', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean(), x=df[df['bol_pre_1t']>1].sigla,mode='lines', name='Lula',
+    #                             line=dict(color='firebrick', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['lul_pre_1t']>1].sigla)[-1], y=int(list(df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['lul_pre_1t']>1].sigla)[-1], y=int(list(df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_pre_1t']>1].lul_pre_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_pre_1t']>1].bol_pre_1t, x=df[df['bol_pre_1t']>1].sigla, mode='markers', name='int_vot_bolsonaro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['bol_pre_1t']>1].lul_pre_1t, #set color equal to a variable
-                                colorscale='ice')))
+    #     ## Bolsonaro
+    #     fig.add_trace(go.Scatter(y=df[df['bol_pre_1t']>1].bol_pre_1t, x=df[df['bol_pre_1t']>1].sigla, mode='markers', name='int_vot_bolsonaro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['bol_pre_1t']>1].lul_pre_1t, #set color equal to a variable
+    #                             colorscale='ice')))
 
-        fig.add_trace(go.Scatter(y=df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean(), x=df[df['bol_pre_1t']>1].sigla,mode='lines', name='Bolsonaro',
-                                line=dict(color='skyblue', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean(), x=df[df['bol_pre_1t']>1].sigla,mode='lines', name='Bolsonaro',
+    #                             line=dict(color='skyblue', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['bol_pre_1t']>1].sigla)[-1], y=int(list(df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['bol_pre_1t']>1].sigla)[-1], y=int(list(df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_pre_1t']>1].bol_pre_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        ## Ciro
-        fig.add_trace(go.Scatter(y=df[df['ciro_pre_1t']>1].ciro_pre_1t, x=df[df['ciro_pre_1t']>1].sigla, mode='markers', name='int_vot_ciro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['ciro_pre_1t']>1].ciro_pre_1t, #set color equal to a variable
-                                colorscale='Greens')))
+    #     ## Ciro
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_pre_1t']>1].ciro_pre_1t, x=df[df['ciro_pre_1t']>1].sigla, mode='markers', name='int_vot_ciro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['ciro_pre_1t']>1].ciro_pre_1t, #set color equal to a variable
+    #                             colorscale='Greens')))
 
-        fig.add_trace(go.Scatter(y=df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean(), x=df[df['ciro_pre_1t']>1].sigla, mode='lines', name='Ciro Gomes',
-                                line=dict(color='seagreen', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean(), x=df[df['ciro_pre_1t']>1].sigla, mode='lines', name='Ciro Gomes',
+    #                             line=dict(color='seagreen', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['ciro_pre_1t']>1].sigla)[-1], y=int(list(df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['ciro_pre_1t']>1].sigla)[-1], y=int(list(df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_pre_1t']>1].ciro_pre_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
-        title=("""
-        Média móvel das intenções de voto de <i>pretos</i> por candidato à presidência - 1º turno<br>
-        """),
-                        xaxis_title='Mês, ano e instituto de pesquisa',
-                        yaxis_title='Intenção de voto (%)',
-                        font=dict(family="arial",size=13),
-                        legend=dict(
-            yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+    #     fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+    #     title=("""
+    #     Média móvel das intenções de voto de <i>pretos</i> por candidato à presidência - 1º turno<br>
+    #     """),
+    #                     xaxis_title='Mês, ano e instituto de pesquisa',
+    #                     yaxis_title='Intenção de voto (%)',
+    #                     font=dict(family="arial",size=13),
+    #                     legend=dict(
+    #         yanchor="auto",
+    #             y=1.15,
+    #             xanchor="auto",
+    #             x=0.5,
+    #             orientation="h",
+    #             font_family="arial",))
 
-        fig.add_annotation(x="mar/22_poderdata_3", y=20,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        fig.add_annotation(x="mai/22_poderdata_2", y=20,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mar/22_poderdata_3", y=20,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mai/22_poderdata_2", y=20,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-        fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+    #     fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
 
       
-        # Add image
-        fig.add_layout_image(
-            dict(
-                source=agre,
-                xref="paper", yref="paper",
-                x=.99, y=1.19,
-                sizex=0.14, sizey=0.14,
-                xanchor="right", yanchor="bottom"
-            )
-        )
+    #     # Add image
+    #     fig.add_layout_image(
+    #         dict(
+    #             source=agre,
+    #             xref="paper", yref="paper",
+    #             x=.99, y=1.19,
+    #             sizex=0.14, sizey=0.14,
+    #             xanchor="right", yanchor="bottom"
+    #         )
+    #     )
 
-        st.plotly_chart(fig)
+    #     st.plotly_chart(fig)
 
-    if raça == 'Outras':
-        fig = go.Figure()
-        ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_out_1t']>1].lul_out_1t, x=df[df['lul_out_1t']>1].sigla, mode='markers', name='int_vot_lula',
-                                marker=dict(
-                                size=5,
-                                color=df[df['lul_out_1t']>1].lul_out_1t, #set color equal to a variable
-                                colorscale='peach')))
+    # if raça == 'Outras':
+    #     fig = go.Figure()
+    #     ## lula
+    #     fig.add_trace(go.Scatter(y=df[df['lul_out_1t']>1].lul_out_1t, x=df[df['lul_out_1t']>1].sigla, mode='markers', name='int_vot_lula',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['lul_out_1t']>1].lul_out_1t, #set color equal to a variable
+    #                             colorscale='peach')))
 
-        fig.add_trace(go.Scatter(y=df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean(), x=df[df['bol_out_1t']>1].sigla,mode='lines', name='Lula',
-                                line=dict(color='firebrick', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean(), x=df[df['bol_out_1t']>1].sigla,mode='lines', name='Lula',
+    #                             line=dict(color='firebrick', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['lul_out_1t']>1].sigla)[-1], y=int(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['lul_out_1t']>1].sigla)[-1], y=int(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_out_1t']>1].bol_out_1t, x=df[df['bol_out_1t']>1].sigla, mode='markers', name='int_vot_bolsonaro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['bol_out_1t']>1].lul_out_1t, #set color equal to a variable
-                                colorscale='ice')))
+    #     ## Bolsonaro
+    #     fig.add_trace(go.Scatter(y=df[df['bol_out_1t']>1].bol_out_1t, x=df[df['bol_out_1t']>1].sigla, mode='markers', name='int_vot_bolsonaro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['bol_out_1t']>1].lul_out_1t, #set color equal to a variable
+    #                             colorscale='ice')))
 
-        fig.add_trace(go.Scatter(y=df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean(), x=df[df['bol_out_1t']>1].sigla,mode='lines', name='Bolsonaro',
-                                line=dict(color='skyblue', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean(), x=df[df['bol_out_1t']>1].sigla,mode='lines', name='Bolsonaro',
+    #                             line=dict(color='skyblue', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['bol_out_1t']>1].sigla)[-1], y=int(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['bol_out_1t']>1].sigla)[-1], y=int(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        ## Ciro
+    #     ## Ciro
 
-        fig.add_trace(go.Scatter(y=df[df['ciro_out_1t']>1].ciro_out_1t, x=df[df['ciro_out_1t']>1].sigla, mode='markers', name='int_vot_ciro',
-                                marker=dict(
-                                size=5,
-                                color=df[df['ciro_out_1t']>1].ciro_out_1t, #set color equal to a variable
-                                colorscale='Greens')))
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_out_1t']>1].ciro_out_1t, x=df[df['ciro_out_1t']>1].sigla, mode='markers', name='int_vot_ciro',
+    #                             marker=dict(
+    #                             size=5,
+    #                             color=df[df['ciro_out_1t']>1].ciro_out_1t, #set color equal to a variable
+    #                             colorscale='Greens')))
 
-        fig.add_trace(go.Scatter(y=df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean(), x=df[df['ciro_out_1t']>1].sigla, mode='lines', name='Ciro Gomes',
-                                line=dict(color='seagreen', width=2.5)))
+    #     fig.add_trace(go.Scatter(y=df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean(), x=df[df['ciro_out_1t']>1].sigla, mode='lines', name='Ciro Gomes',
+    #                             line=dict(color='seagreen', width=2.5)))
 
-        fig.add_annotation(x=list(df[df['ciro_out_1t']>1].sigla)[-1], y=int(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1])}%",
-                    showarrow=True,
-                    arrowhead=1,
-                    ax = 40, ay = 0,
-                    font=dict(size=20, color="black", family="Arial"))
+    #     fig.add_annotation(x=list(df[df['ciro_out_1t']>1].sigla)[-1], y=int(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1])}%",
+    #                 showarrow=True,
+    #                 arrowhead=1,
+    #                 ax = 40, ay = 0,
+    #                 font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
-        title=("""
-        Média móvel das intenções de voto de <i>outras</i> candidato à presidência - 1º turno<br>
-        """),
-                        xaxis_title='Mês, ano e instituto de pesquisa',
-                        yaxis_title='Intenção de voto (%)',
-                        font=dict(family="arial",size=13),
-                        legend=dict(
-            yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+    #     fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+    #     title=("""
+    #     Média móvel das intenções de voto de <i>outras</i> candidato à presidência - 1º turno<br>
+    #     """),
+    #                     xaxis_title='Mês, ano e instituto de pesquisa',
+    #                     yaxis_title='Intenção de voto (%)',
+    #                     font=dict(family="arial",size=13),
+    #                     legend=dict(
+    #         yanchor="auto",
+    #             y=1.15,
+    #             xanchor="auto",
+    #             x=0.5,
+    #             orientation="h",
+    #             font_family="arial",))
 
-        fig.add_annotation(x="mar/22_futura", y=20,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        fig.add_annotation(x="mai/22_futura", y=20,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mar/22_futura", y=20,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+    #     fig.add_annotation(x="mai/22_futura", y=20,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-        fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+    #     fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
 
-        # Add image
-        fig.add_layout_image(
-            dict(
-                source=agre,
-                xref="paper", yref="paper",
-                x=.99, y=1.20,
-                sizex=0.12, sizey=0.12,
-                xanchor="right", yanchor="bottom"
-            )
-        )
+    #     # Add image
+    #     fig.add_layout_image(
+    #         dict(
+    #             source=agre,
+    #             xref="paper", yref="paper",
+    #             x=.99, y=1.20,
+    #             sizex=0.12, sizey=0.12,
+    #             xanchor="right", yanchor="bottom"
+    #         )
+    #     )
 
-        st.plotly_chart(fig)
+    #     st.plotly_chart(fig)
 
-        ## info
-    st.markdown(f"""
-    <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
-    """, unsafe_allow_html=True)
-    st.markdown("---")
+    #     ## info
+    # st.markdown(f"""
+    # <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
+    # """, unsafe_allow_html=True)
+    # st.markdown("---")
 
     #####################################
     ### dados por instituto de pesquisa##
@@ -884,170 +959,171 @@ if options_turn == 'Primeiro Turno':
         with col:
             inst = st.selectbox('Selecione o instituto de pesquisa:',options=institutos)
         with col1:
-            raça2 = st.selectbox('Escolha a raça ou o gênero:',options=['--Selecione uma opção--','Parda', 'Branca', 'Preta', 'Outras', 'Mulheres', 'Homens'])
+            ##drop 'Parda', 'Branca', 'Preta', 'Outras', 
+            raça2 = st.selectbox('Escolha a raça ou o gênero:',options=['--Selecione uma opção--','Mulheres', 'Homens'])
 
         col1, col2, col3 = st.columns([.5,3,.5])
 
         with col2:
-            if raça2 == 'Parda':
+            # if raça2 == 'Parda':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Pardos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_par_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'Pardos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_par_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_par_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_par_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_par_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_par_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_par_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_par_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça2 == 'Branca':
+            # if raça2 == 'Branca':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Brancos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_bra_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'Brancos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_bra_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_bra_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_bra_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_bra_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_bra_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_bra_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_bra_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça2 == 'Preta':
+            # if raça2 == 'Preta':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Pretos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_pre_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'Pretos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_pre_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_pre_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_pre_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_pre_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_pre_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_pre_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_pre_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça2 == 'Outras':
+            # if raça2 == 'Outras':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'outras' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_out_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'outras' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_out_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_out_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_out_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_out_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_out_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
             if raça2 == 'Homens':
 
@@ -1055,14 +1131,14 @@ if options_turn == 'Primeiro Turno':
 
                 plt.rcParams['figure.figsize'] = (12,7)
                 plt.title(f"\n Intenção de voto de 'Homens' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_h_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                plt.plot(df[df['nome_instituto']==inst].lul_h_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
+                plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_h_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+                plt.plot(df[df['nome_instituto']==inst].bol_h_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
+                plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_h_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+                plt.plot(df[df['nome_instituto']==inst].ciro_h_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_homens")
+                plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
                 plt.style.use('ggplot')
                 plt.xlabel('mês/ano e instituto de pesquisa')
@@ -1095,14 +1171,14 @@ if options_turn == 'Primeiro Turno':
 
                 plt.rcParams['figure.figsize'] = (12,7)
                 plt.title(f"\n Intenção de voto de 'Mulheres' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_m_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                plt.plot(df[df['nome_instituto']==inst].lul_m_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].lul_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_m_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+                plt.plot(df[df['nome_instituto']==inst].bol_m_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].bol_ger_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_m_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+                plt.plot(df[df['nome_instituto']==inst].ciro_m_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].ciro_ger_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
                 plt.style.use('ggplot')
                 plt.xlabel('mês/ano e instituto de pesquisa')
@@ -1130,7 +1206,7 @@ if options_turn == 'Primeiro Turno':
                             )
         
         st.markdown(f"""
-        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de raça e gênero. No entanto, nem todos os institutos coletam tais informações. Assim, se a combinação selecionada retornar apenas os dados de intenção de voto geral, isso significa, que o instituto selecionado não coletou a informação.</h7>
+        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de gênero. No entanto, nem todos os institutos divulgam tais informações. Assim, se a combinação selecionada retornar apenas os dados de intenção de voto geral, isso significa, que o instituto selecionado não disponibizou a informação em seu boletim público.</h7>
         """, unsafe_allow_html=True)
     st.markdown("---")
 
@@ -1162,20 +1238,20 @@ if options_turn == 'Primeiro Turno':
 
             ## coluna 1
             lul = Image.open('lula-oculos.jpg')
-            col0,col, col1, col2, col3 = st.columns(5)
+            col0,col, col1, col2 = st.columns(4)
             col0.image(lul,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['lul_ger_rej_1t']>1].lul_ger_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['lul_ger_rej_1t']>1].lul_ger_rej_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_rej_1t']>1].bol_ger_rej_1t.rolling(m_m).mean())[-1],1),1)}%")
             col1.metric(label="Homem", value=f"{round(list(df[df['lul_h_rej_1t']>1].lul_h_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['lul_cat_1t']>1].lul_cat_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_cat_1t']>1].bol_cat_1t.rolling(m_m).mean())[-1],1)}")
             col2.metric(label="Mulher", value=f"{round(list(df[df['lul_m_rej_1t']>1].lul_m_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['lul_ev_1t']>1].lul_ev_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ev_1t']>1].bol_ev_1t.rolling(m_m).mean())[-1],1),1)}")
-            col3.metric(label="Pardo", value=f"{round(list(df[df['lul_par_rej_1t']>1].lul_par_rej_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col3.metric(label="Pardo", value=f"{round(list(df[df['lul_par_rej_1t']>1].lul_par_rej_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['lul_out_1t']>1].lul_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
 
-            ## coluna 2
-            col5, col6, col7, col8, col9 = st.columns(5)
-            col5.metric(label="",value="")
-            col6.metric(label="Branco", value=f"{round(list(df[df['lul_bra_rej_1t']>1].lul_bra_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['lul_non_1t']>1].lul_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
-            col7.metric(label="Preto", value=f"{round(list(df[df['lul_pre_rej_1t']>1].lul_pre_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['lul_espi_1t']>1].lul_espi_1t.rolling(m_m).mean())[-1],1),1)}")
-            col8.metric(label="Amarelo", value=f"{round(list(df[df['lul_amar_rej_1t']>1].lul_amar_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_ateu_1t']>1].lul_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
-            col9.metric(label="Outros", value=f"{round(list(df[df['lul_out_rej_1t']>1].lul_out_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_umb_can_1t']>1].lul_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
+            # ## coluna 2
+            # col5, col6, col7, col8, col9 = st.columns(5)
+            # col5.metric(label="",value="")
+            # col6.metric(label="Branco", value=f"{round(list(df[df['lul_bra_rej_1t']>1].lul_bra_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['lul_non_1t']>1].lul_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
+            # col7.metric(label="Preto", value=f"{round(list(df[df['lul_pre_rej_1t']>1].lul_pre_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['lul_espi_1t']>1].lul_espi_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col8.metric(label="Amarelo", value=f"{round(list(df[df['lul_amar_rej_1t']>1].lul_amar_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_ateu_1t']>1].lul_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col9.metric(label="Outros", value=f"{round(list(df[df['lul_out_rej_1t']>1].lul_out_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['lul_umb_can_1t']>1].lul_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
              
             st.markdown("---")
 
@@ -1184,20 +1260,20 @@ if options_turn == 'Primeiro Turno':
         if rej_bolsonaro:
 
             bol = Image.open('bolsonaro_capacete.jpg')
-            col0,col, col1, col2, col3 = st.columns(5)
+            col0,col, col1, col2 = st.columns(4)
             col0.image(bol,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['bol_ger_rej_1t']>1].bol_ger_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['bol_ger_rej_1t']>1].bol_ger_rej_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_rej_1t']>1].bol_ger_rej_1t.rolling(m_m).mean())[-1],1),1)}%")
             col1.metric(label="Homem", value=f"{round(list(df[df['bol_h_rej_1t']>1].bol_h_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['bol_cat_1t']>1].bol_cat_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_cat_1t']>1].bol_cat_1t.rolling(m_m).mean())[-1],1)}")
             col2.metric(label="Mulher", value=f"{round(list(df[df['bol_m_rej_1t']>1].bol_m_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['bol_ev_1t']>1].bol_ev_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ev_1t']>1].bol_ev_1t.rolling(m_m).mean())[-1],1),1)}")
-            col3.metric(label="Pardo", value=f"{round(list(df[df['bol_par_rej_1t']>1].bol_par_rej_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col3.metric(label="Pardo", value=f"{round(list(df[df['bol_par_rej_1t']>1].bol_par_rej_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_out_1t']>1].bol_out_1t.rolling(m_m).mean())[-1],1),1)}")
 
-            ## coluna 2
-            col5, col6, col7, col8, col9 = st.columns(5)
-            col5.metric(label="",value="")
-            col6.metric(label="Branco", value=f"{round(list(df[df['bol_bra_rej_1t']>1].bol_bra_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
-            col7.metric(label="Preto", value=f"{round(list(df[df['bol_pre_rej_1t']>1].bol_pre_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1),1)}")
-            col8.metric(label="Amarelo", value=f"{round(list(df[df['bol_amar_rej_1t']>1].bol_amar_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
-            col9.metric(label="Outros", value=f"{round(list(df[df['bol_out_rej_1t']>1].bol_out_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
+            # ## coluna 2
+            # col5, col6, col7, col8, col9 = st.columns(5)
+            # col5.metric(label="",value="")
+            # col6.metric(label="Branco", value=f"{round(list(df[df['bol_bra_rej_1t']>1].bol_bra_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_non_1t']>1].bol_non_1t.rolling(m_m).mean())[-1],1)}")
+            # col7.metric(label="Preto", value=f"{round(list(df[df['bol_pre_rej_1t']>1].bol_pre_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_espi_1t']>1].bol_espi_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col8.metric(label="Amarelo", value=f"{round(list(df[df['bol_amar_rej_1t']>1].bol_amar_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ateu_1t']>1].bol_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col9.metric(label="Outros", value=f"{round(list(df[df['bol_out_rej_1t']>1].bol_out_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_umb_can_1t']>1].bol_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
             
             st.markdown("---")
 
@@ -1207,20 +1283,20 @@ if options_turn == 'Primeiro Turno':
 
             ## coluna 1
             ciro = Image.open('ciro_insta.jpg')
-            col0,col, col1, col2, col3 = st.columns(5)
+            col0,col, col1, col2 = st.columns(4)
             col0.image(ciro,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['ciro_ger_rej_1t']>1].ciro_ger_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['ciro_ger_rej_1t']>1].ciro_ger_rej_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ger_rej_1t']>1].ciro_ger_rej_1t.rolling(m_m).mean())[-1],1),1)}%")
             col1.metric(label="Homem", value=f"{round(list(df[df['ciro_h_rej_1t']>1].ciro_h_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['ciro_cat_1t']>1].ciro_cat_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_cat_1t']>1].ciro_cat_1t.rolling(m_m).mean())[-1],1)}")
             col2.metric(label="Mulher", value=f"{round(list(df[df['ciro_m_rej_1t']>1].ciro_m_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['ciro_ev_1t']>1].ciro_ev_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ev_1t']>1].ciro_ev_1t.rolling(m_m).mean())[-1],1),1)}")
-            col3.metric(label="Pardo", value=f"{round(list(df[df['ciro_par_rej_1t']>1].ciro_par_rej_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col3.metric(label="Pardo", value=f"{round(list(df[df['ciro_par_rej_1t']>1].ciro_par_rej_1t.rolling(m_m).mean())[-1],1)}%") #delta=f"{round(round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_out_1t']>1].ciro_out_1t.rolling(m_m).mean())[-1],1),1)}")
 
-            ## coluna 2
-            col5, col6, col7, col8, col9 = st.columns(5)
-            col5.metric(label="",value="")
-            col6.metric(label="Branco", value=f"{round(list(df[df['ciro_bra_rej_1t']>1].ciro_bra_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1)}")
-            col7.metric(label="Preto", value=f"{round(list(df[df['ciro_pre_rej_1t']>1].ciro_pre_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1),1)}")
-            col8.metric(label="Amarelo", value=f"{round(list(df[df['ciro_amar_rej_1t']>1].ciro_amar_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
-            col9.metric(label="Outros", value=f"{round(list(df[df['ciro_out_rej_1t']>1].ciro_out_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
+            # ## coluna 2
+            # col5, col6, col7, col8, col9 = st.columns(5)
+            # col5.metric(label="",value="")
+            # col6.metric(label="Branco", value=f"{round(list(df[df['ciro_bra_rej_1t']>1].ciro_bra_rej_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_non_1t']>1].ciro_non_1t.rolling(m_m).mean())[-1],1)}")
+            # col7.metric(label="Preto", value=f"{round(list(df[df['ciro_pre_rej_1t']>1].ciro_pre_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_espi_1t']>1].ciro_espi_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col8.metric(label="Amarelo", value=f"{round(list(df[df['ciro_amar_rej_1t']>1].ciro_amar_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ateu_1t']>1].ciro_ateu_1t.rolling(m_m).mean())[-1],1),1)}")
+            # col9.metric(label="Outros", value=f"{round(list(df[df['ciro_out_rej_1t']>1].ciro_out_rej_1t.rolling(m_m).mean())[-1],1)}%") #, delta=f"{round(round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_umb_can_1t']>1].ciro_umb_can_1t.rolling(m_m).mean())[-1],1),1)}")
             st.markdown("---")
 
         st.markdown(f"""
@@ -1247,12 +1323,9 @@ if options_turn == 'Primeiro Turno':
 
         if rej_vote_med_move:
 
-            ##import image
-
             fig = go.Figure()
             
             ## lula
-
             fig.add_trace(go.Scatter(y=df[df['lul_ger_rej_1t']>1].lul_ger_rej_1t, x=df[df['lul_ger_rej_1t']>1].sigla, mode='markers', name='rejeição_geral_lula',
                                     marker=dict(
                                     size=5,
@@ -1267,7 +1340,6 @@ if options_turn == 'Primeiro Turno':
                         arrowhead=1,
                         ax = 40, ay = 25,
                         font=dict(size=20, color="black", family="Arial"))
-
 
             ## bolsonaro
 
@@ -1305,7 +1377,7 @@ if options_turn == 'Primeiro Turno':
 
             ## detalhes
 
-            fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+            fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
             title=("""
             <i>Rejeição geral dos candidatos à presidência - 1º turno<i><br>
             """),
@@ -1362,10 +1434,10 @@ if options_turn == 'Primeiro Turno':
 
         fig = go.Figure()
         ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_m_rej_1t']>1].lul_m_rej_1t, x=df[df['lul_m_rej_1t']>1].sigla, mode='markers', name='int_voto_lula',
+        fig.add_trace(go.Scatter(y=df.lul_m_rej_1t, x=df.sigla, mode='markers', name='int_voto_lula',
                                 marker=dict(
                                 size=5,
-                                color=df[df['lul_m_rej_1t']>1].lul_m_rej_1t, #set color equal to a variable
+                                color=df.lul_m_rej_1t, #set color equal to a variable
                                 colorscale='peach')))
 
         fig.add_trace(go.Scatter(y=df[df['lul_m_rej_1t']>1].lul_m_rej_1t.rolling(m_m).mean(), x=df[df['bol_m_rej_1t']>1].sigla,mode='lines', name='Lula',
@@ -1378,10 +1450,10 @@ if options_turn == 'Primeiro Turno':
                     font=dict(size=20, color="black", family="Arial"))
 
         ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_m_rej_1t']>1].bol_m_rej_1t, x=df[df['bol_m_rej_1t']>1].sigla, mode='markers', name='int_voto_bolsonaro',
+        fig.add_trace(go.Scatter(y=df.bol_m_rej_1t, x=df.sigla, mode='markers', name='int_voto_bolsonaro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['bol_m_rej_1t']>1].lul_m_rej_1t, #set color equal to a variable
+                                color=df.lul_m_rej_1t, #set color equal to a variable
                                 colorscale='ice')))
 
         fig.add_trace(go.Scatter(y=df[df['bol_m_rej_1t']>1].bol_m_rej_1t.rolling(m_m).mean(), x=df[df['bol_m_rej_1t']>1].sigla,mode='lines', name='Bolsonaro',
@@ -1394,10 +1466,10 @@ if options_turn == 'Primeiro Turno':
                     font=dict(size=20, color="black", family="Arial"))
 
         ## Ciro
-        fig.add_trace(go.Scatter(y=df[df['ciro_m_rej_1t']>1].ciro_m_rej_1t, x=df[df['ciro_m_rej_1t']>1].sigla, mode='markers', name='int_voto_ciro',
+        fig.add_trace(go.Scatter(y=df.ciro_m_rej_1t, x=df.sigla, mode='markers', name='int_voto_ciro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['ciro_m_rej_1t']>1].ciro_m_rej_1t, #set color equal to a variable
+                                color=df.ciro_m_rej_1t, #set color equal to a variable
                                 colorscale='Aggrnyl')))
 
         fig.add_trace(go.Scatter(y=df[df['ciro_m_rej_1t']>1].ciro_m_rej_1t.rolling(m_m).mean(), x=df[df['ciro_m_rej_1t']>1].sigla, mode='lines', name='Ciro Gomes',
@@ -1409,7 +1481,7 @@ if options_turn == 'Primeiro Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
         Média móvel das intenções de voto de <i>mulheres</i> por candidato à presidência - 1º turno<br>
         """),
@@ -1418,11 +1490,11 @@ if options_turn == 'Primeiro Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+                y=1.15,
+                xanchor="auto",
+                x=0.5,
+                orientation="h",
+                font_family="arial",))
 
         fig.add_annotation(x="mar/22_poderdata_3", y=22,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=25,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
@@ -1447,17 +1519,17 @@ if options_turn == 'Primeiro Turno':
         st.markdown(f"""
         <br>
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
-        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto geral utilizamos {len(df[df['lul_ger_rej_1t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_rej_1t']>1])} pesquisas.</h7><br>
+        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da rejeição geral utilizamos {len(df[df['lul_ger_rej_1t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_rej_1t']>1])} pesquisas.</h7><br>
         """, unsafe_allow_html=True)
 
     if gen == 'Masculino ':
 
         fig = go.Figure()
         ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_h_rej_1t']>1].lul_h_rej_1t, x=df[df['lul_h_rej_1t']>1].sigla, mode='markers', name='int_vot_lula',
+        fig.add_trace(go.Scatter(y=df.lul_h_rej_1t, x=df.sigla, mode='markers', name='int_vot_lula',
                                 marker=dict(
                                 size=5,
-                                color=df[df['lul_h_rej_1t']>1].lul_h_rej_1t, #set color equal to a variable
+                                color=df.lul_h_rej_1t, #set color equal to a variable
                                 colorscale='peach')))
 
         fig.add_trace(go.Scatter(y=df[df['lul_h_rej_1t']>1].lul_h_rej_1t.rolling(m_m).mean(), x=df[df['bol_h_rej_1t']>1].sigla,mode='lines', name='Lula',
@@ -1469,10 +1541,10 @@ if options_turn == 'Primeiro Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
         ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_h_rej_1t']>1].bol_h_rej_1t, x=df[df['bol_h_rej_1t']>1].sigla, mode='markers', name='int_vot_bolsonaro',
+        fig.add_trace(go.Scatter(y=df.bol_h_rej_1t, x=df.sigla, mode='markers', name='int_vot_bolsonaro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['bol_h_rej_1t']>1].lul_h_rej_1t, #set color equal to a variable
+                                color=df.bol_h_rej_1t, #set color equal to a variable
                                 colorscale='ice')))
 
         fig.add_trace(go.Scatter(y=df[df['bol_h_rej_1t']>1].bol_h_rej_1t.rolling(m_m).mean(), x=df[df['bol_h_rej_1t']>1].sigla,mode='lines', name='Bolsonaro',
@@ -1484,10 +1556,10 @@ if options_turn == 'Primeiro Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
         ## Ciro
-        fig.add_trace(go.Scatter(y=df[df['ciro_h_rej_1t']>1].ciro_h_rej_1t, x=df[df['ciro_h_rej_1t']>1].sigla, mode='markers', name='int_vot_ciro',
+        fig.add_trace(go.Scatter(y=df.ciro_h_rej_1t, x=df.sigla, mode='markers', name='int_vot_ciro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['ciro_h_rej_1t']>1].ciro_h_rej_1t, #set color equal to a variable
+                                color=df.ciro_h_rej_1t, #set color equal to a variable
                                 colorscale='Aggrnyl')))
 
         fig.add_trace(go.Scatter(y=df[df['ciro_h_rej_1t']>1].ciro_h_rej_1t.rolling(m_m).mean(), x=df[df['ciro_h_rej_1t']>1].sigla, mode='lines', name='Ciro Gomes',
@@ -1499,7 +1571,7 @@ if options_turn == 'Primeiro Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
         Média móvel das intenções de voto de <i>homens</i> por candidato à presidência - 1º turno<br>
         """),
@@ -1508,11 +1580,11 @@ if options_turn == 'Primeiro Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+                y=1.15,
+                xanchor="auto",
+                x=0.5,
+                orientation="h",
+                font_family="arial",))
 
         fig.add_annotation(x="mar/22_poderdata_3", y=33,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=35,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
@@ -1535,7 +1607,7 @@ if options_turn == 'Primeiro Turno':
         ## info
         st.markdown(f"""
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
-        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto geral utilizamos {len(df[df['lul_ger_rej_1t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_rej_1t']>1])} pesquisas.</h7><br>
+        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da rejeição geral utilizamos {len(df[df['lul_ger_rej_1t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_rej_1t']>1])} pesquisas.</h7><br>
         """, unsafe_allow_html=True)
 
     st.markdown("---")
@@ -1900,193 +1972,194 @@ if options_turn == 'Primeiro Turno':
         <h3 style='text-align: left; color: #303030; font-family:Helvetica; text-rendering: optimizelegibility; background-color: #EAE6DA;'>
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 18">
         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-        </svg> Rejeição por raça, gênero e candidato segundo instituto de pesquisa: </h3><br>
+        </svg> Rejeição por gênero e candidato segundo instituto de pesquisa: </h3><br>
         """, unsafe_allow_html=True)
 
         col, col1 = st.columns(2)
         with col:
             inst = st.selectbox(' Selecione o instituto de pesquisa: ',options=institutos)
         with col1:
-            raça4 = st.selectbox('Escolha a raça ou o gênero:',options=[' --Selecione uma opção-- ',' Parda ', ' Branca ', ' Preta ', ' Outras ', ' Mulheres ', ' Homens '])
+            ##drop ' Parda ', ' Branca ', ' Preta ', ' Outras ', 
+            raça4 = st.selectbox('Escolha o gênero:',options=[' --Selecione uma opção-- ',' Mulheres ', ' Homens '])
 
         col1, col2, col3 = st.columns([.5,3,.5])
 
         with col2:
 
-            if raça4 == ' Parda ':
+            # if raça4 == ' Parda ':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Pardos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_par_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Rejeição de 'Pardos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_par_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_par_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_par_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_par_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_par_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_par_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_par_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça4 == ' Branca ':
+            # if raça4 == ' Branca ':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Brancos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_bra_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Rejeição de 'Brancos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_bra_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_bra_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_bra_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_bra_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_bra_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_bra_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_bra_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça4 == ' Preta ':
+            # if raça4 == ' Preta ':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Pretos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_pre_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Rejeição de 'Pretos' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_pre_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_pre_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_pre_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_pre_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_pre_rej_1t")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_pre_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_pre_rej_1t")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça4 == ' Outras ':
+            # if raça4 == ' Outras ':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'outras' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_out_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Rejeição de 'outras' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_out_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_out_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_out_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_out_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_out_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
             if raça4 == ' Homens ':
 
                 df.set_index('sigla',inplace = True)
 
                 plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Homens' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_h_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                plt.title(f"\n Rejeição de 'Homens' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+                plt.plot(df[df['nome_instituto']==inst].lul_h_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
+                plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_h_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+                plt.plot(df[df['nome_instituto']==inst].bol_h_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
+                plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_h_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+                plt.plot(df[df['nome_instituto']==inst].ciro_h_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_homens")
+                plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
                 plt.style.use('ggplot')
                 plt.xlabel('mês/ano e instituto de pesquisa')
@@ -2118,15 +2191,15 @@ if options_turn == 'Primeiro Turno':
                 df.set_index('sigla',inplace = True)
 
                 plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Mulheres' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_m_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                plt.title(f"\n Rejeição de 'Mulheres' à presidente - {inst.title()} 1º turno" + "\n", fontdict={'fontsize':18})
+                plt.plot(df[df['nome_instituto']==inst].lul_m_rej_1t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].lul_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_m_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+                plt.plot(df[df['nome_instituto']==inst].bol_m_rej_1t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].bol_ger_rej_1t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_m_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
+                plt.plot(df[df['nome_instituto']==inst].ciro_m_rej_1t, data=df, marker='.', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=3, label="ciro_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].ciro_ger_rej_1t, data=df, marker='.',linestyle='dashed', markerfacecolor='seagreen', markersize=8, color='seagreen', linewidth=1, label="ciro_geral")
 
                 plt.style.use('ggplot')
                 plt.xlabel('mês/ano e instituto de pesquisa')
@@ -2263,10 +2336,10 @@ if options_turn == 'Segundo Turno':
 
             fig = go.Figure()
             ## lula
-            fig.add_trace(go.Scatter(y=df[df['lul_ger_2t']>1].lul_ger_2t, x=df.sigla, mode='markers', name='int_vot_geral_lula',
+            fig.add_trace(go.Scatter(y=df.lul_ger_2t, x=df.sigla, mode='markers', name='int_vot_geral_lula',
                                     marker=dict(
                                     size=5,
-                                    color=df[df['lul_ger_2t']>1].lul_ger_2t, #set color equal to a variable
+                                    color=df.lul_ger_2t, #set color equal to a variable
                                     colorscale='peach')))
 
             fig.add_trace(go.Scatter(y=df[df['lul_ger_2t']>1].lul_ger_2t.rolling(m_m).mean(), x=df[df['bol_ger_2t']>1].sigla,mode='lines', name='Lula',
@@ -2279,10 +2352,10 @@ if options_turn == 'Segundo Turno':
                         font=dict(size=20, color="black", family="Arial"))
 
             ## Bolsonaro
-            fig.add_trace(go.Scatter(y=df[df['bol_ger_2t']>1].bol_ger_2t, x=df.sigla, mode='markers', name='int_vot_geral_bolsonaro',
+            fig.add_trace(go.Scatter(y=df.bol_ger_2t, x=df.sigla, mode='markers', name='int_vot_geral_bolsonaro',
                                     marker=dict(
                                     size=5,
-                                    color=df[df['bol_ger_2t']>1].lul_ger_2t, #set color equal to a variable
+                                    color=df.lul_ger_2t, #set color equal to a variable
                                     colorscale='ice')))
 
             fig.add_trace(go.Scatter(y=df[df['bol_ger_2t']>1].bol_ger_2t.rolling(m_m).mean(), x=df[df['bol_ger_2t']>1].sigla,mode='lines', name='Bolsonaro',
@@ -2294,7 +2367,41 @@ if options_turn == 'Segundo Turno':
                     ax = 40, ay = 0,
                         font=dict(size=20, color="black", family="Arial"))
 
-            fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+            # ## Brancos e Nulos e não sabe e não respondeu
+
+            fig.add_trace(go.Scatter(y=df.bra_nul_ns_nr_ger_2t, x=df.sigla, mode='markers', name='brancos_nulos_ns_nr',
+                                    marker=dict(
+                                    size=5,
+                                    color=df.bra_nul_ns_nr_ger_2t, #set color equal to a variable
+                                    colorscale='Greys')))
+
+            fig.add_trace(go.Scatter(y=df[df['bra_nul_ns_nr_ger_2t']>1].bra_nul_ns_nr_ger_2t.rolling(m_m).mean(), x=df[df['bra_nul_ns_nr_ger_2t']>1].sigla, mode='lines', name='Brancos, nulos, NS e NR',
+                                    line=dict(color='grey', width=2.5)))
+
+            fig.add_annotation(x=list(df[df['bra_nul_ns_nr_ger_2t']>1].sigla)[-1], y=int(list(df[df['bra_nul_ns_nr_ger_2t']>1].bra_nul_ns_nr_ger_2t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bra_nul_ns_nr_ger_2t']>1].bra_nul_ns_nr_ger_2t.rolling(m_m).mean())[-1])}%",
+                        showarrow=True,
+                        arrowhead=1,
+                        ax = 40, ay = -8,
+                        font=dict(size=20, color="black", family="Arial"))
+
+            ## Brancos e Nulos
+
+            # fig.add_trace(go.Scatter(y=df.bra_nulo_ger_2t, x=df.sigla, mode='markers', name='brancos_nulos_ns_nr',
+            #                         marker=dict(
+            #                         size=5,
+            #                         color=df.bra_nulo_ger_2t, #set color equal to a variable
+            #                         colorscale='Greys')))
+
+            # fig.add_trace(go.Scatter(y=df[df['bra_nulo_ger_2t']>1].bra_nulo_ger_2t.rolling(m_m).mean(), x=df[df['bra_nulo_ger_2t']>1].sigla, mode='lines', name='Brancos, nulos, NS e NR',
+            #                         line=dict(color='grey', width=2.5)))
+
+            # fig.add_annotation(x=list(df[df['bra_nulo_ger_2t']>1].sigla)[-1], y=int(list(df[df['bra_nulo_ger_2t']>1].bra_nulo_ger_2t.rolling(m_m).mean())[-1]),text=f"{int(list(df[df['bra_nulo_ger_2t']>1].bra_nulo_ger_2t.rolling(m_m).mean())[-1])}%",
+            #             showarrow=True,
+            #             arrowhead=1,
+            #             ax = 40, ay = -8,
+            #             font=dict(size=20, color="black", family="Arial"))
+
+            fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
             title=("""
             Média móvel das intenções de voto de geral por candidato à presidência - 2º turno<br>
             """),
@@ -2357,10 +2464,10 @@ if options_turn == 'Segundo Turno':
 
         fig = go.Figure()
         ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_m_2t']>1].lul_m_2t, x=df[df['lul_m_2t']>1].sigla, mode='markers', name='int_voto_lula',
+        fig.add_trace(go.Scatter(y=df.lul_m_2t, x=df.sigla, mode='markers', name='int_voto_lula',
                                 marker=dict(
                                 size=5,
-                                color=df[df['lul_m_2t']>1].lul_m_2t, #set color equal to a variable
+                                color=df.lul_m_2t, #set color equal to a variable
                                 colorscale='peach')))
 
         fig.add_trace(go.Scatter(y=df[df['lul_m_2t']>1].lul_m_2t.rolling(m_m).mean(), x=df[df['bol_m_2t']>1].sigla,mode='lines', name='Lula',
@@ -2373,10 +2480,10 @@ if options_turn == 'Segundo Turno':
                     font=dict(size=20, color="black", family="Arial"))
 
         ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_m_2t']>1].bol_m_2t, x=df[df['bol_m_2t']>1].sigla, mode='markers', name='int_voto_bolsonaro',
+        fig.add_trace(go.Scatter(y=df.bol_m_2t, x=df.sigla, mode='markers', name='int_voto_bolsonaro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['bol_m_2t']>1].lul_m_2t, #set color equal to a variable
+                                color=df.bol_m_2t, #set color equal to a variable
                                 colorscale='ice')))
 
         fig.add_trace(go.Scatter(y=df[df['bol_m_2t']>1].bol_m_2t.rolling(m_m).mean(), x=df[df['bol_m_2t']>1].sigla,mode='lines', name='Bolsonaro',
@@ -2388,7 +2495,7 @@ if options_turn == 'Segundo Turno':
                        ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
         Média móvel das intenções de voto de <i>mulheres</i> por candidato à presidência - 2º turno<br>
         """),
@@ -2397,11 +2504,11 @@ if options_turn == 'Segundo Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+                y=1.15,
+                xanchor="auto",
+                x=0.5,
+                orientation="h",
+                font_family="arial",))
 
         fig.add_annotation(x="mar/22_poderdata_3", y=22,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=25,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
@@ -2433,10 +2540,10 @@ if options_turn == 'Segundo Turno':
 
         fig = go.Figure()
         ## lula
-        fig.add_trace(go.Scatter(y=df[df['lul_h_2t']>1].lul_h_2t, x=df[df['lul_h_2t']>1].sigla, mode='markers', name='int_vot_lula',
+        fig.add_trace(go.Scatter(y=df.lul_h_2t, x=df.sigla, mode='markers', name='int_vot_lula',
                                 marker=dict(
                                 size=5,
-                                color=df[df['lul_h_2t']>1].lul_h_2t, #set color equal to a variable
+                                color=df.lul_h_2t, #set color equal to a variable
                                 colorscale='peach')))
 
         fig.add_trace(go.Scatter(y=df[df['lul_h_2t']>1].lul_h_2t.rolling(m_m).mean(), x=df[df['bol_h_2t']>1].sigla,mode='lines', name='Lula',
@@ -2448,10 +2555,10 @@ if options_turn == 'Segundo Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
         ## Bolsonaro
-        fig.add_trace(go.Scatter(y=df[df['bol_h_2t']>1].bol_h_2t, x=df[df['bol_h_2t']>1].sigla, mode='markers', name='int_vot_bolsonaro',
+        fig.add_trace(go.Scatter(y=df.bol_h_2t, x=df.sigla, mode='markers', name='int_vot_bolsonaro',
                                 marker=dict(
                                 size=5,
-                                color=df[df['bol_h_2t']>1].lul_h_2t, #set color equal to a variable
+                                color=df.bol_h_2t, #set color equal to a variable
                                 colorscale='ice')))
 
         fig.add_trace(go.Scatter(y=df[df['bol_h_2t']>1].bol_h_2t.rolling(m_m).mean(), x=df[df['bol_h_2t']>1].sigla,mode='lines', name='Bolsonaro',
@@ -2463,7 +2570,7 @@ if options_turn == 'Segundo Turno':
                     ax = 40, ay = 0,
                     font=dict(size=20, color="black", family="Arial"))
 
-        fig.update_layout(width = 1000, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
+        fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
         Média móvel das intenções de voto de <i>homens</i> por candidato à presidência - 2º turno<br>
         """),
@@ -2472,11 +2579,11 @@ if options_turn == 'Segundo Turno':
                         font=dict(family="arial",size=13),
                         legend=dict(
             yanchor="auto",
-            y=1.1,
-            xanchor="auto",
-            x=0.5,
-            orientation="h",
-            font_family="arial",))
+                y=1.15,
+                xanchor="auto",
+                x=0.5,
+                orientation="h",
+                font_family="arial",))
 
         fig.add_annotation(x="mar/22_poderdata_3", y=33,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=35,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
@@ -2516,165 +2623,166 @@ if options_turn == 'Segundo Turno':
         <h3 style='text-align: left; color: #303030; font-family:Helvetica; text-rendering: optimizelegibility; background-color: #e6e6e6;'>
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 18">
         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-        </svg> Intenção de voto por raça, gênero e candidato segundo instituto de pesquisa: </h3><br>
+        </svg> Intenção de voto por gênero e candidato segundo instituto de pesquisa: </h3><br>
         """, unsafe_allow_html=True)
 
         col, col1 = st.columns(2)
         with col:
             inst = st.selectbox('Selecione o instituto de pesquisa:',options=institutos)
         with col1:
-            raça6 = st.selectbox('Escolha a raça ou o gênero:',options=['  --Selecione uma opção--  ','  Parda', '  Branca', '  Preta', '  Outras', '  Mulheres', '  Homens'])
+            ## drop'  Parda', '  Branca', '  Preta', '  Outras', 
+            raça6 = st.selectbox('Escolha o gênero:',options=['  --Selecione uma opção--  ','  Mulheres', '  Homens'])
 
         col1, col2, col3 = st.columns([.5,3,.5])
 
         with col2:
-            if raça6 == '  Parda':
+            # if raça6 == '  Parda':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Pardos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_par_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_2t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'Pardos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_par_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_par_2t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_par_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_2t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_par_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_par_2t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça6 == '  Branca':
+            # if raça6 == '  Branca':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Brancos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_bra_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_2t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'Brancos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_bra_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_bra_2t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_bra_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_2t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_bra_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_bra_2t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça6 == '  Preta':
+            # if raça6 == '  Preta':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'Pretos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_pre_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_2t")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'Pretos' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_pre_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_pre_2t")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_pre_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_2t")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_pre_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_pre_2t")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
-            if raça6 == '  Outras':
+            # if raça6 == '  Outras':
 
-                df.set_index('sigla',inplace = True)
+            #     df.set_index('sigla',inplace = True)
 
-                plt.rcParams['figure.figsize'] = (12,7)
-                plt.title(f"\n Intenção de voto de 'outras' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_out_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+            #     plt.rcParams['figure.figsize'] = (12,7)
+            #     plt.title(f"\n Intenção de voto de 'outras' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
+            #     plt.plot(df[df['nome_instituto']==inst].lul_out_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_out_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_out_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_outras")
+            #     plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
-                plt.style.use('ggplot')
-                plt.xlabel('mês/ano e instituto de pesquisa')
-                plt.xticks(rotation=80,fontsize=12)
-                plt.yticks(fontsize=14)
-                plt.ylabel('Intenção de voto em %')
-                plt.rcParams.update({'axes.facecolor':'white'})
+            #     plt.style.use('ggplot')
+            #     plt.xlabel('mês/ano e instituto de pesquisa')
+            #     plt.xticks(rotation=80,fontsize=12)
+            #     plt.yticks(fontsize=14)
+            #     plt.ylabel('Intenção de voto em %')
+            #     plt.rcParams.update({'axes.facecolor':'white'})
 
-                plt.grid(color='black', linestyle='-', linewidth=.08)
-                plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
+            #     plt.grid(color='black', linestyle='-', linewidth=.08)
+            #     plt.legend(fontsize=9, loc='best',ncol=3, borderaxespad=0.)
 
-                #axes = plt.gca()
-                #axes.xaxis.grid()
+            #     #axes = plt.gca()
+            #     #axes.xaxis.grid()
 
-                grafico = plt.savefig("grafico.png",bbox_inches='tight')
+            #     grafico = plt.savefig("grafico.png",bbox_inches='tight')
 
-                st.pyplot(plt)
+            #     st.pyplot(plt)
 
-                with open(f"grafico.png", "rb") as file:
-                    st.download_button(
-                            label="Baixar o gráfico",
-                            data=file,
-                            file_name="grafico.png",
-                            mime="image/png"
-                            )
+            #     with open(f"grafico.png", "rb") as file:
+            #         st.download_button(
+            #                 label="Baixar o gráfico",
+            #                 data=file,
+            #                 file_name="grafico.png",
+            #                 mime="image/png"
+            #                 )
 
             if raça6 == '  Homens':
 
@@ -2682,11 +2790,11 @@ if options_turn == 'Segundo Turno':
 
                 plt.rcParams['figure.figsize'] = (12,7)
                 plt.title(f"\n Intenção de voto de 'Homens' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_h_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                plt.plot(df[df['nome_instituto']==inst].lul_h_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_homens")
+                plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_h_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+                plt.plot(df[df['nome_instituto']==inst].bol_h_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_homens")
+                plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
                 plt.style.use('ggplot')
                 plt.xlabel('mês/ano e instituto de pesquisa')
@@ -2719,11 +2827,11 @@ if options_turn == 'Segundo Turno':
 
                 plt.rcParams['figure.figsize'] = (12,7)
                 plt.title(f"\n Intenção de voto de 'Mulheres' à presidente - {inst.title()} 2º turno" + "\n", fontdict={'fontsize':18})
-                plt.plot(df[(df['nome_instituto']==inst)].lul_m_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
+                plt.plot(df[df['nome_instituto']==inst].lul_m_2t, data=df, marker='.', markerfacecolor='firebrick', markersize=10, color='red', linewidth=3,alpha=0.6, label="lul_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].lul_ger_2t, data=df, marker='.',linestyle='dashed', markerfacecolor='firebrick', markersize=5, color='red', linewidth=1,alpha=0.6, label="lula_geral")
 
-                plt.plot(df[(df['nome_instituto']==inst)].bol_m_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
-                plt.plot(df[(df['nome_instituto']==inst)].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
+                plt.plot(df[df['nome_instituto']==inst].bol_m_2t, data=df, marker='*', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=3, label="bol_mulheres")
+                plt.plot(df[df['nome_instituto']==inst].bol_ger_2t, data=df, marker='*',linestyle='dashed', markerfacecolor='skyblue', markersize=8, color='skyblue', linewidth=1, label="bolsonaro_geral")
 
                 plt.style.use('ggplot')
                 plt.xlabel('mês/ano e instituto de pesquisa')
@@ -2751,7 +2859,7 @@ if options_turn == 'Segundo Turno':
                             )
         
         st.markdown(f"""
-        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de raça e gênero. No entanto, nem todos os institutos coletam tais informações. Assim, se a combinação selecionada retornar apenas os dados de intenção de voto geral, isso significa, que o instituto selecionado não coletou a informação.</h7>
+        <h7 style='text-align: center; color: black; color:#606060;font-family:arial'>Nota 1: Os gráficos reproduzem os dados divulgados pelos institutos de pesquisa a partir do recorte de gênero. No entanto, nem todos os institutos coletam tais informações. Assim, se a combinação selecionada retornar apenas os dados de intenção de voto geral, isso significa, que o instituto selecionado não coletou a informação.</h7>
         """, unsafe_allow_html=True)
     st.markdown("---")
     
