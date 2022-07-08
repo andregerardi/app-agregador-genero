@@ -16,7 +16,7 @@ import plotly.express as px
 ########################################################################
 
 st.set_page_config(
-     page_title="Agregador de pesquisas eleitorais por raça e gênero",
+     page_title="Agregador de pesquisas eleitorais por gênero",
      page_icon="chart_with_upwards_trend",
      layout="wide",
      initial_sidebar_state="expanded",
@@ -30,7 +30,7 @@ st.set_page_config(
 # components.html(
 #     """
 #         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-#         data-text="Agregador de Pesquisas eleitorais do gênero e raça - LabDados FGV Direito SP"
+#         data-text="Agregador de Pesquisas eleitorais do gênero - LabDados FGV Direito SP"
 #         data-url="https://cebrap.org.br/teste-app/"
 #         data-show-count="true">
 #         data-size="Large"
@@ -133,7 +133,7 @@ if options_turn == 'Primeiro Turno':
     with st.container():
         st.markdown(f"""
         <h3 style='text-align: left; color: #303030; font-family:Helvetica; text-rendering: optimizelegibility; background-color: #e6e6e6;'>
-        Resumo - intenção de voto geral por gênero e raça:</h3><br>
+        Resumo - intenção de voto geral por gênero:</h3><br>
         """, unsafe_allow_html=True)
 
         int_vot_lula = st.checkbox('Lula')
@@ -141,7 +141,7 @@ if options_turn == 'Primeiro Turno':
         if int_vot_lula:
 
             ## coluna 1
-            lul = Image.open('lula-oculos.jpg')
+            lul = Image.open('lulacabeça.jpg')
             col0,col, col1, col2 = st.columns(4)
             col0.image(lul,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['lul_ger_1t']>1].lul_ger_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['lul_ger_1t']>1].lul_ger_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1),1)}%")
@@ -165,7 +165,7 @@ if options_turn == 'Primeiro Turno':
         if int_vot_bolsonaro:
 
             ## coluna 1
-            bol = Image.open('bolsonaro_capacete.jpg')
+            bol = Image.open('bolso-fem.jpg')
             col0,col, col1, col2 = st.columns(4)
             col0.image(bol,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_1t']>1].bol_ger_1t.rolling(m_m).mean())[-1],1),1)}%")
@@ -189,7 +189,7 @@ if options_turn == 'Primeiro Turno':
         if int_vot_ciro:
 
             ## coluna 1
-            ciro = Image.open('ciro_oculos.jpg')
+            ciro = Image.open('ciro_perfil.jpg')
             col0,col, col1, col2 = st.columns(4)
             col0.image(ciro,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['ciro_ger_1t']>1].ciro_ger_1t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['ciro_ger_1t']>1].ciro_ger_1t.rolling(m_m).mean())[-1],1) - round(list(df[df['ciro_ger_1t']>1].ciro_ger_1t.rolling(m_m).mean())[-1],1),1)}%")
@@ -333,6 +333,7 @@ if options_turn == 'Primeiro Turno':
 
             fig.add_annotation(x="mar/22_poderdata_3", y=29,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
             fig.add_annotation(x="mai/22_poderdata_2", y=32,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+            fig.add_annotation(x="jun/22_fsb_2", y=29,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
             fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
 
@@ -457,9 +458,11 @@ if options_turn == 'Primeiro Turno':
 
         fig.add_annotation(x="mar/22_poderdata_3", y=22,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=25,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jun/22_fsb_2", y=26,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
         fig.update_xaxes(tickangle = 280,rangeslider_visible=False,title_font_family="Arial")
 
+        fig.update_yaxes(range=[0,55]) ## exibe o intervalo de y a ser exibido no gráfico
         
         # Add image
         fig.add_layout_image(
@@ -478,7 +481,7 @@ if options_turn == 'Primeiro Turno':
         st.markdown(f"""
         <br>
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
-        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto geral utilizamos {len(df[df['lul_ger_1t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_1t']>1])} pesquisas.</h7><br>
+        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção por gênero utilizamos {len(df[df['lul_h_1t']>1])} pesquisas eleitorais.</h7><br>
         """, unsafe_allow_html=True)
 
     if gen == 'Masculino':
@@ -565,16 +568,19 @@ if options_turn == 'Primeiro Turno':
 
         fig.add_annotation(x="mar/22_poderdata_3", y=33,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=35,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jun/22_fsb_2", y=33,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-        fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+        fig.update_xaxes(tickangle = 280,rangeslider_visible=False,title_font_family="Arial")
+
+        fig.update_yaxes(range=[0,55]) ## exibe o intervalo de y a ser exibido no gráfico
 
         # Add image
         fig.add_layout_image(
             dict(
                 source=agre,
                 xref="paper", yref="paper",
-                x=.99, y=1.20,
-                sizex=0.12, sizey=0.12,
+                x=.99, y=1.15,
+                sizex=0.14, sizey=0.14,
                 xanchor="right", yanchor="bottom"
             )
         )
@@ -584,7 +590,7 @@ if options_turn == 'Primeiro Turno':
         ## info
         st.markdown(f"""
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
-        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto geral utilizamos {len(df[df['lul_ger_1t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_1t']>1])} pesquisas.</h7><br>
+        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto por gênero utilizamos {len(df[df['lul_h_1t']>1])} pesquisas eleitorais.</h7><br>
         """, unsafe_allow_html=True)
 
     st.markdown("---")
@@ -953,7 +959,7 @@ if options_turn == 'Primeiro Turno':
         <h3 style='text-align: left; color: #303030; font-family:Helvetica; text-rendering: optimizelegibility; background-color: #e6e6e6;'>
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 18">
         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-        </svg> Intenção de voto por raça, gênero e candidato segundo instituto de pesquisa: </h3><br>
+        </svg> Intenção de voto por gênero e candidato segundo instituto de pesquisa: </h3><br>
         """, unsafe_allow_html=True)
 
         col, col1 = st.columns(2)
@@ -961,7 +967,7 @@ if options_turn == 'Primeiro Turno':
             inst = st.selectbox('Selecione o instituto de pesquisa:',options=institutos)
         with col1:
             ##drop 'Parda', 'Branca', 'Preta', 'Outras', 
-            raça2 = st.selectbox('Escolha a raça ou o gênero:',options=['--Selecione uma opção--','Mulheres', 'Homens'])
+            raça2 = st.selectbox('Escolha o gênero:',options=['--Selecione uma opção--','Mulheres', 'Homens'])
 
         col1, col2, col3 = st.columns([.5,3,.5])
 
@@ -1093,7 +1099,7 @@ if options_turn == 'Primeiro Turno':
     with st.container():
         st.markdown(f"""
         <h3 style='text-align: left; color: #303030; font-family:Helvetica; text-rendering: optimizelegibility; background-color: #EAE6DA;'>
-        Resumo - Rejeição geral e por gênero e raça segundo candidato:</h3><br>
+        Resumo - Rejeição geral e por gênero segundo candidato:</h3><br>
         """, unsafe_allow_html=True)
 
         rej_lula = st.checkbox('Lula ')
@@ -1241,21 +1247,25 @@ if options_turn == 'Primeiro Turno':
 
             ## detalhes
 
-            fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=110),
+            fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=160),
             title=("""
-            <i>Rejeição geral dos candidatos à presidência (1º turno)<i><br>
+            <i>Rejeição geral dos candidatos à presidência (1º turno)<i><br><br>
             """),
                             xaxis_title='Mês, ano e instituto de pesquisa',
                             yaxis_title='Rejeição (%)',
-                            legend_title_text='<br><br>',
+                            legend_title_text='',
                             font=dict(family="arial",size=13),
                             legend=dict(
-                
-                orientation="v",
+                yanchor="auto",
+                y=1.13,
+                xanchor="auto",
+                x=0.4,
+                orientation="h",
                 font_family="arial",))
 
             fig.add_annotation(x="mar/22_pr_pesq", y=35,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
             fig.add_annotation(x="mai/22_datafolha", y=35,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+            fig.add_annotation(x="jun/22_fsb_2", y=33,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
             fig.update_xaxes(tickangle = 280,rangeslider_visible=False,title_font_family="Arial")
 
@@ -1266,8 +1276,8 @@ if options_turn == 'Primeiro Turno':
                 dict(
                     source=agre,
                     xref="paper", yref="paper",
-                    x=.88, y=1.07,
-                    sizex=0.12, sizey=0.12,
+                    x=.99, y=1.15,
+                    sizex=0.14, sizey=0.14,
                     xanchor="right", yanchor="bottom"
                 )
             )
@@ -1992,7 +2002,7 @@ if options_turn == 'Segundo Turno':
         if int_vot_lula2:
 
             ## coluna 1
-            lul = Image.open('lula-oculos.jpg')
+            lul = Image.open('lulacabeça.jpg')
             col0,col, col1, col2 = st.columns(4)
             col0.image(lul,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['lul_ger_2t']>1].lul_ger_2t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['lul_ger_2t']>1].lul_ger_2t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_2t']>1].bol_ger_2t.rolling(m_m).mean())[-1],1),1)}%")
@@ -2016,7 +2026,7 @@ if options_turn == 'Segundo Turno':
         if int_vot_bolsonaro2:
 
             ## coluna 1
-            bol = Image.open('bolsonaro_capacete.jpg')
+            bol = Image.open('bolso-fem.jpg')
             col0,col, col1, col2 = st.columns(4)
             col0.image(bol,width=100)
             col.metric(label="Geral", value=f"{round(list(df[df['bol_ger_2t']>1].bol_ger_2t.rolling(m_m).mean())[-1],1)}%") # delta=f"{round(round(list(df[df['bol_ger_2t']>1].bol_ger_2t.rolling(m_m).mean())[-1],1) - round(list(df[df['bol_ger_2t']>1].bol_ger_2t.rolling(m_m).mean())[-1],1),1)}%")
@@ -2128,7 +2138,7 @@ if options_turn == 'Segundo Turno':
 
             fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
             title=("""
-            Média móvel das intenções de voto de geral por candidato à presidência - 2º turno<br>
+            Média móvel das intenções de voto geral por candidato à presidência (2º turno)<br>
             """),
                             xaxis_title='Mês, ano e instituto de pesquisa',
                             yaxis_title='Intenção de voto (%)',
@@ -2143,6 +2153,7 @@ if options_turn == 'Segundo Turno':
 
             fig.add_annotation(x="mar/22_poderdata_3", y=30,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
             fig.add_annotation(x="mai/22_poderdata_2", y=30,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+            fig.add_annotation(x="jun/22_fsb_2", y=31,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
             fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
             fig.update_yaxes(range=[0,70])
@@ -2239,7 +2250,7 @@ if options_turn == 'Segundo Turno':
 
         fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=2, t=150),
         title=("""
-        Média móvel das intenções de voto de <i>mulheres</i> por candidato à presidência - 2º turno<br>
+        Média móvel das intenções de voto de <i>mulheres</i> por candidato à presidência (2º turno)<br>
         """),
                         xaxis_title='Mês, ano e instituto de pesquisa',
                         yaxis_title='Intenção de voto (%)',
@@ -2254,8 +2265,9 @@ if options_turn == 'Segundo Turno':
 
         fig.add_annotation(x="mar/22_poderdata_3", y=30,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=30,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jun/22_fsb_2", y=28,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-        fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+        fig.update_xaxes(tickangle = 280,rangeslider_visible=False,title_font_family="Arial")
 
         
         # Add image
@@ -2263,7 +2275,7 @@ if options_turn == 'Segundo Turno':
             dict(
                 source=agre,
                 xref="paper", yref="paper",
-                x=.99, y=1.20,
+                x=.99, y=1.15,
                 sizex=0.14, sizey=0.14,
                 xanchor="right", yanchor="bottom"
             )
@@ -2275,7 +2287,7 @@ if options_turn == 'Segundo Turno':
         st.markdown(f"""
         <br>
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
-        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto geral utilizamos {len(df[df['lul_ger_2t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_2t']>1])} pesquisas.</h7><br>
+        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto por gênero utilizamos {len(df[df['lul_h_2t']>1])} pesquisas eleitorais.</h7><br>
         """, unsafe_allow_html=True)
 
     if gen5 == ' Masculino':
@@ -2331,7 +2343,7 @@ if options_turn == 'Segundo Turno':
 
         fig.update_layout(width = 1100, height = 800, template = 'plotly', margin=dict(r=80, l=80, b=4, t=150),
         title=("""
-        Média móvel das intenções de voto de <i>homens</i> por candidato à presidência - 2º turno<br>
+        Média móvel das intenções de voto de <i>homens</i> por candidato à presidência (2º turno)<br>
         """),
                         xaxis_title='Mês, ano e instituto de pesquisa',
                         yaxis_title='Intenção de voto (%)',
@@ -2346,15 +2358,16 @@ if options_turn == 'Segundo Turno':
 
         fig.add_annotation(x="mar/22_poderdata_3", y=40,text="Moro<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="mai/22_poderdata_2", y=40,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jun/22_fsb_2", y=40,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-        fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+        fig.update_xaxes(tickangle = 280,rangeslider_visible=False,title_font_family="Arial")
 
         # Add image
         fig.add_layout_image(
             dict(
                 source=agre,
                 xref="paper", yref="paper",
-                x=.99, y=1.20,
+                x=.99, y=1.15,
                 sizex=0.14, sizey=0.14,
                 xanchor="right", yanchor="bottom"
             )
@@ -2365,7 +2378,7 @@ if options_turn == 'Segundo Turno':
         ## info
         st.markdown(f"""
         <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: Método utilizado: média móvel de {m_m} dias.</h7><br>
-        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto geral utilizamos {len(df[df['lul_ger_2t']>1])} pesquisas eleitorais, e para o recorte de gênero, {len(df[df['lul_h_2t']>1])} pesquisas.</h7><br>
+        <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Para o cálculo da média móvel da intenção de voto por gênero utilizamos {len(df[df['lul_h_2t']>1])} pesquisas eleitorais.</h7><br>
         """, unsafe_allow_html=True)
 
     st.markdown("---")
@@ -2527,22 +2540,21 @@ with st.container():
 
         <p style='text-align: center; font-family:Segoe UI;'><b>Explicação:</b></p>
 
-        <p style='text-align: justify; font-family:Segoe UI;'>1. O banco de dados é atualizado constantemente. No momento, ele contém informações de {len(df)} pesquisas eleitorais;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>1. O banco de dados é atualizado constantemente;</p>
         <p style='text-align: justify; font-family:Segoe UI;'>2. Os institutos de pesquisa consultados são: { ', '.join(set(df['nome_instituto'].T)).title()};</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>3. O agregador de pesquisas por gênero e raça compila dados dos levantamentos realizados pelos institutos. Não nos responsabilizamos pelas amostras ou técnicas;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>4. Para a composição do banco de dados são consideradas apenas pesquisas nacionais, bem como informações dos três principais candidatos do 1º turno das eleições presidenciais: Lula, Bolsonaro e Ciro Gomes, e de Lula e Bolsonaro, no 2º turno. Levando em conta o recorte de gênero e por raça, a partir de tais pesquisas, coletamos as intenção de voto dos candidatos nos dois turnos, assim como a rejeição;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>3. O agregador de pesquisas por gênero compila dados dos levantamentos realizados pelos institutos. Não nos responsabilizamos pelas amostras ou técnicas;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>4. Para a composição do banco de dados são consideradas apenas pesquisas nacionais, bem como informações dos três principais candidatos do 1º turno das eleições presidenciais: Lula, Bolsonaro e Ciro Gomes, e de Lula e Bolsonaro, no 2º turno. Levando em conta o recorte de gênero, a partir de tais pesquisas, coletamos as intenção de voto dos candidatos nos dois turnos, assim como a rejeição;</p>
         <p style='text-align: justify; font-family:Segoe UI;'>5. O percentual de <i>rejeição</i> dos candidatos obtivemos por meio da resposta de eleitores que declaram "não votar de jeito nenhum” em determinado candidato;</p>
         <p style='text-align: justify; font-family:Segoe UI;'>6. O percentual de <i>reprovação da administração</i> do Presidente Jair Bolsonaro foi obtido a partir da soma da respostas "ruim" e "péssimo" à questão que avalia a satisfação dos eleitores para com a administração do mandatário: "a administração do Presidente Jair Bolsonaro está sendo ótima, boa, regular, ruim ou péssima?";</p> 
         <p style='text-align: justify; font-family:Segoe UI;'>7. Os institutos de pesquisa não incluem dados do recorte racial em todas as pesquisas realizadas por motivos internos. Portanto, a coleta de tais informações é inconstante, visto que nem sempre está disponível;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>8. Devido a irregularidade na coleta e ao tamanho da amostra, dados referentes a raças demograficamente minoritárias tal como amarelos e indígenas, entre outras mais, apresentam do ponto de vista estatístico distorções severas. Assim, quando os dados permitem, decidiu-se pela sua inclusão na categoria "outros";</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>9. Vale destacar que os dados censitários, principais referências para a construção da amostragem das pesquisas, estão defasados. Os valores de amostragem variam conforme os critérios próprios de cada instituto de pesquisa. Os institutos utilizam dados o IBGE de 2010, da PNAD de 2021 e 2022 e também do TSE. Para termos uma noção do universo amostrado pelos institutos: Em relação a amostra de gênero dos candidatos, os <i>homens</i> variaram entre {int(df['am_h'].agg('min'))}% e {int(df['am_h'].agg('max'))}% e as <i>mulheres</i> entre {int(df['am_m'].agg('min'))}% e {int(df['am_m'].agg('max'))}%.</p> 
-        <p style='text-align: justify; font-family:Segoe UI;'>10. Em relação às pesquisas, no levantamento de dados para o agregador, consideramos a última data quando os entrevistadores colheram as respostas e não a data da divulgação da pesquisa, que por interesses diversos, podem ser adiadas por semanas ou não publicadas;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>11. Partindo da data da última coleta das pesquisas calculou-se a média móvel de diversas variáveis correspondendo à {m_m} dias;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>12. Para obter a média móvel utilizamos dados de uma série temporal e aplicamos o seguinte código Python <code>rolling().mean()</code>. Uma explicação detalhada da utilização deste código pode ser <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html">vista aqui</a>;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>13. Ao calcular a média móvel, os {m_m} primeiros resultados são omitidos dos gráficos. O objetivo principal da aplicação deste método é reduzir as oscilações no intuito de deixar as linhas dos gráficos mais fluídas. Exitem outras outras técnicas estatíticas para a redução do ruído dos dados da série temporal, tais como <i>weighted moving average, kernel smoother</i>, entre outras;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>14. O resumo das médias móveis apresentado no primeiro e segundo turnos considera e apresenta o último valor da média obtida para cada candidato. O dado é atualizado automaticamente à medida que novas pesquisas são inseridas no banco de dados;</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>15. Para deixar os gráficos limpos optou-se por não inserir a margem de erro na linha da média móvel, dado que nos recortes por gênero e raça variam de 2% à 8,5%, segundo os institutos. Uma lista com as informações amostrais de cada pesquisa, incluíndo a margem de erro, poderá ser obtida na aba "pesquisas eleitorais utilizadas";</p>
-        <p style='text-align: justify; font-family:Segoe UI;'>16. As imagens dos candidatos que utilizamos provêm de fontes externas: <a href="https://oglobo.globo.com/epoca/o-que-dizem-os-autores-dos-programas-dos-presidenciaveis-sobre-combate-as-mudancas-climaticas-23128520">Ciro Gomes</a>, <a href="https://www.dw.com/pt-br/o-brasil-na-imprensa-alem%C3%A3-29-05/a-48968730/">Lula</a>, <a href="https://www.poder360.com.br/poderdata/poderdata-lula-tem-50-contra-40-de-bolsonaro-no-2o-turno/">Bolsonaro</a>.</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>8. Vale destacar que os dados censitários, principais referências para a construção da amostragem das pesquisas, estão defasados. Os valores de amostragem variam conforme os critérios próprios de cada instituto de pesquisa. Os institutos utilizam dados o IBGE de 2010, da PNAD de 2021 e 2022 e também do TSE. Para termos uma noção do universo amostrado pelos institutos: Em relação a amostra de gênero dos candidatos, os <i>homens</i> variaram entre {int(df['am_h'].agg('min'))}% e {int(df['am_h'].agg('max'))}% e as <i>mulheres</i> entre {int(df['am_m'].agg('min'))}% e {int(df['am_m'].agg('max'))}%.</p> 
+        <p style='text-align: justify; font-family:Segoe UI;'>9. Em relação às pesquisas, no levantamento de dados para o agregador, consideramos a última data quando os entrevistadores colheram as respostas e não a data da divulgação da pesquisa, que por interesses diversos, podem ser adiadas por semanas ou não publicadas;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>10. Partindo da data da última coleta das pesquisas calculou-se a média móvel de diversas variáveis correspondendo à {m_m} dias;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>11. Para obter a média móvel utilizamos dados de uma série temporal e aplicamos o seguinte código Python <code>rolling().mean()</code>. Uma explicação detalhada da utilização deste código pode ser <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html">vista aqui</a>;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>12. Ao calcular a média móvel, os {m_m} primeiros resultados são omitidos dos gráficos. O objetivo principal da aplicação deste método é reduzir as oscilações no intuito de deixar as linhas dos gráficos mais fluídas. Exitem outras outras técnicas estatíticas para a redução do ruído dos dados da série temporal, tais como <i>weighted moving average, kernel smoother</i>, entre outras;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>13. O resumo das médias móveis apresentado no primeiro e segundo turnos considera e apresenta o último valor da média obtida para cada candidato. O dado é atualizado automaticamente à medida que novas pesquisas são inseridas no banco de dados;</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>14. Para deixar os gráficos limpos optou-se por não inserir a margem de erro na linha da média móvel. Uma lista com as informações amostrais de cada pesquisa, incluíndo a margem de erro, poderá ser obtida na aba "pesquisas eleitorais utilizadas";</p>
+        <p style='text-align: justify; font-family:Segoe UI;'>15. As imagens dos candidatos que utilizamos provêm de fontes externas: <a href="https://oglobo.globo.com/epoca/o-que-dizem-os-autores-dos-programas-dos-presidenciaveis-sobre-combate-as-mudancas-climaticas-23128520">Ciro Gomes</a>, <a href="https://www.dw.com/pt-br/o-brasil-na-imprensa-alem%C3%A3-29-05/a-48968730/">Lula</a>, <a href="https://www.poder360.com.br/poderdata/poderdata-lula-tem-50-contra-40-de-bolsonaro-no-2o-turno/">Bolsonaro</a>.</p>
 
         </body>
         </html>
@@ -2595,7 +2607,7 @@ with st.container():
     with col2:
         expander2 = st.expander("Veja como citar o agregador")
         expander2.markdown(f"""
-        <p style='text-align: center; font-family:Segoe UI;'>GERARDI, Dirceu André. <b>Agregador de pesquisas eleitorais por gênero e raça</b>: consolidação de dados de pesquisas eleitorais por raça e gênero às eleições presidenciais de 2022. Versão 1.0. São Paulo, 2022. Disponível em: XXXXX. Acesso em: 00/00/000.</p>
+        <p style='text-align: center; font-family:Segoe UI;'>GERARDI, Dirceu André. <b>Agregador de pesquisas eleitorais por gênero</b>: consolidação de dados de pesquisas eleitorais por gênero às eleições presidenciais de 2022. Versão 1.0. São Paulo, 2022. Disponível em: XXXXX. Acesso em: 00/00/000.</p>
         """, unsafe_allow_html=True)
 
     with col3:
