@@ -325,7 +325,7 @@ if options_turn == 'Primeiro Turno':
                             font=dict(family="arial",size=13),
                             legend=dict(
                 yanchor="auto",
-                y=1.15,
+                y=1.13,
                 xanchor="auto",
                 x=0.5,
                 orientation="h",
@@ -343,7 +343,7 @@ if options_turn == 'Primeiro Turno':
                 dict(
                     source=agre,
                     xref="paper", yref="paper",
-                    x=.99, y=1.20,
+                    x=.99, y=1.15,
                     sizex=0.14, sizey=0.14,
                     opacity=1,
                     xanchor="right", yanchor="bottom"
