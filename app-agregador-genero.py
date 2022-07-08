@@ -335,7 +335,7 @@ if options_turn == 'Primeiro Turno':
             fig.add_annotation(x="mai/22_poderdata_2", y=32,text="Dória<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
             fig.add_annotation(x="jun/22_fsb_2", y=29,text="Datena<br>desiste",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
 
-            fig.update_xaxes(tickangle = 280,rangeslider_visible=True,title_font_family="Arial")
+            fig.update_xaxes(tickangle = 280,rangeslider_visible=False,title_font_family="Arial")
 
 
             # Add image
