@@ -2493,14 +2493,14 @@ if options_turn == 'Segundo Turno':
         # fig.add_vline(x=str("mai/22_poderdata_2"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
         # fig.add_annotation(x="mai/22_poderdata_2", y=63,text="Dória<br>desiste de<br>candidatura",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         # #candidaturas
-        # fig.add_annotation(x="jul/22_ipespe", y=44,text="Candidatura<br>Lula (PT)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = -30,font=dict(size=10, color="black", family="Arial"))
-        # fig.add_annotation(x="jul/22_ipespe", y=35,text="Candidatura<br>Bolsonaro (PL)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 60,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jul/22_ipespe", y=44,text="Candidatura<br>Lula (PT)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = -30,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jul/22_ipespe", y=35,text="Candidatura<br>Bolsonaro (PL)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 60,font=dict(size=10, color="black", family="Arial"))
         #linha inicio campanha
-        # fig.add_annotation(x="ago/22_fsb", y=61,text="Início da<br>Campanha<br>oficial<br>16/08",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        # fig.add_vline(x=str("ago/22_fsb"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
+        fig.add_annotation(x="ago/22_fsb", y=61,text="Início da<br>Campanha<br>oficial<br>16/08",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_vline(x=str("ago/22_fsb"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
         #linha debate
-        # fig.add_annotation(x="ago/22_ipec_2", y=64,text="1º Debate<br>na TV",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        # fig.add_vline(x=str("ago/22_ipec_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
+        fig.add_annotation(x="ago/22_ipec_2", y=64,text="1º Debate<br>na TV",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_vline(x=str("ago/22_ipec_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
         #linha 7 de setembro
         fig.add_annotation(x="set/22_datafolha_2", y=63,text="7 de<br>setembro",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("set/22_datafolha_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
@@ -2621,8 +2621,8 @@ if options_turn == 'Segundo Turno':
         fig.add_annotation(x="ago/22_fsb", y=61,text="Início da<br>Campanha<br>oficial<br>16/08",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("ago/22_fsb"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
         #linha debate
-        # fig.add_annotation(x="ago/22_ipec_2", y=64,text="1º Debate<br>na TV",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
-        # fig.add_vline(x=str("ago/22_ipec_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
+        fig.add_annotation(x="ago/22_ipec_2", y=64,text="1º Debate<br>na TV",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_vline(x=str("ago/22_ipec_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
         #linha 7 de setembro
         fig.add_annotation(x="set/22_datafolha_2", y=63,text="7 de<br>setembro",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("set/22_datafolha_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
