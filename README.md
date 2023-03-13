@@ -1,4 +1,4 @@
-# app-agregador-genero-raca-fgv
+# app-agregador-genero
 
 Agregador de pesquisas eleitorais por gênero e raça
 
