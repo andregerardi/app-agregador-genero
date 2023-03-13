@@ -2390,7 +2390,7 @@ if options_turn == 'Segundo Turno':
             #     )
             # )
 
-            st.plotly_chart(fig)
+            st.plotly_chart(fig,use_container_width=True)
             st.markdown(f"""
             <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 1: *Método utilizado:* média móvel de {m_m} dias.</h7><br>
             <h7 style='text-align: left; color: black; color:#606060;font-family:arial'>Nota 2: Os valores indicados no gráfico correspondem a última média da série temporal registrada no dia *{list(df.data)[-1].strftime(format='%d-%m-%Y')}*</h7><br>
@@ -2493,8 +2493,8 @@ if options_turn == 'Segundo Turno':
         # fig.add_vline(x=str("mai/22_poderdata_2"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
         # fig.add_annotation(x="mai/22_poderdata_2", y=63,text="Dória<br>desiste de<br>candidatura",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         # #candidaturas
-        fig.add_annotation(x="jul/22_ipespe", y=44,text="Candidatura<br>Lula (PT)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = -30,font=dict(size=10, color="black", family="Arial"))
-        fig.add_annotation(x="jul/22_ipespe", y=35,text="Candidatura<br>Bolsonaro (PL)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 60,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jul/22_ipespe", y=55,text="Candidatura<br>Lula (PT)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = -30,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="jul/22_ipespe", y=31,text="Candidatura<br>Bolsonaro (PL)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 60,font=dict(size=10, color="black", family="Arial"))
         #linha inicio campanha
         fig.add_annotation(x="ago/22_fsb", y=61,text="Início da<br>Campanha<br>oficial<br>16/08",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("ago/22_fsb"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
@@ -2516,7 +2516,7 @@ if options_turn == 'Segundo Turno':
         fig.add_vline(x=str("out/22_datafolha_6"), line_width=.5, line_dash="dot", line_color="black", opacity=.4)
 
         fig.update_xaxes(tickangle = 300,rangeslider_visible=False,title_font_family="Arial")
-        fig.update_yaxes(range=[0,70])
+        #fig.update_yaxes(range=[0,70])
 
         
         # Add image
@@ -2530,7 +2530,7 @@ if options_turn == 'Segundo Turno':
         #     )
         # )
 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig,use_container_width=True)
 
         ## info
         st.markdown(f"""
@@ -2650,7 +2650,7 @@ if options_turn == 'Segundo Turno':
         #     )
         # )
 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig,use_container_width=True)
 
         ## info
         st.markdown(f"""
