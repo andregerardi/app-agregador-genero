@@ -2485,10 +2485,10 @@ if options_turn == 'Segundo Turno':
 
         ##pico segunda onda covid
         fig.add_vline(x=str("abr/21_poderdata"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
-        fig.add_annotation(x="abr/21_poderdata", y=63,text="Pico<br>2a onda<br>Covid-19",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="abr/21_poderdata", y=68,text="Pico<br>2a onda<br>Covid-19",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         #moro desiste
         fig.add_vline(x=str("mar/22_poderdata_3"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
-        fig.add_annotation(x="mar/22_poderdata_3", y=63,text="Moro<br>desiste de<br>candidatura",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="mar/22_poderdata_3", y=68,text="Moro<br>desiste de<br>candidatura",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         #dória desiste
         # fig.add_vline(x=str("mai/22_poderdata_2"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
         # fig.add_annotation(x="mai/22_poderdata_2", y=63,text="Dória<br>desiste de<br>candidatura",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
@@ -2496,21 +2496,21 @@ if options_turn == 'Segundo Turno':
         fig.add_annotation(x="jul/22_ipespe", y=55,text="Candidatura<br>Lula (PT)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = -30,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="jul/22_ipespe", y=31,text="Candidatura<br>Bolsonaro (PL)",showarrow=True,arrowhead=1,yanchor="bottom",ax = 0, ay = 60,font=dict(size=10, color="black", family="Arial"))
         #linha inicio campanha
-        fig.add_annotation(x="ago/22_fsb", y=61,text="Início da<br>Campanha<br>oficial<br>16/08",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="ago/22_fsb", y=68,text="Início da<br>Campanha<br>oficial<br>16/08",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("ago/22_fsb"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)
         #linha debate
-        fig.add_annotation(x="ago/22_ipec_2", y=64,text="1º Debate<br>na TV",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="ago/22_ipec_2", y=65,text="1º Debate<br>na TV",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("ago/22_ipec_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
         #linha 7 de setembro
-        fig.add_annotation(x="set/22_datafolha_2", y=63,text="7 de<br>setembro",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="set/22_datafolha_2", y=65,text="7 de<br>setembro",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("set/22_datafolha_2"), line_width=.3, line_dash="dot", line_color="black", opacity=.5)
         ##resultado 1o turno
-        fig.add_annotation(x="out/22_ipec", y=63,text="<b>Resultado<br>1º turno</b>",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="out/22_ipec", y=68,text="<b>Resultado<br>1º turno</b>",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="out/22_ipec", y=58,text="Lula = 48,4%",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="out/22_ipec", y=31,text="Bolsonaro = 43,2%",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("out/22_ipec"), line_width=.5, line_dash="dot", line_color="black", opacity=.5)        
         # ##resultado 2o turno
-        fig.add_annotation(x="out/22_datafolha_6", y=63,text="<b>Resultado<br>2º turno</b>",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
+        fig.add_annotation(x="out/22_datafolha_6", y=68,text="<b>Resultado<br>2º turno</b>",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="out/22_datafolha_6", y=58,text="Lula = 50,9%",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_annotation(x="out/22_datafolha_6", y=31,text="Bolsonaro = 49,1%",showarrow=False,arrowhead=1,yanchor="bottom",ax = 0, ay = 40,font=dict(size=10, color="black", family="Arial"))
         fig.add_vline(x=str("out/22_datafolha_6"), line_width=.5, line_dash="dot", line_color="black", opacity=.4)
