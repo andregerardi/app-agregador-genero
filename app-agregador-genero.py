@@ -93,7 +93,7 @@ start_date = dt.datetime(2022,1,1) # data de oito meses atras
 @st.cache(allow_output_mutation=True,persist=True)
 def load_dados():
     ## importa o banco
-    banco =  pd.read_excel('banco_raca_genero_fgv.xlsx')
+    banco =  pd.read_excel(r'banco_raca_genero_fgv.xlsx')
     ## lista de instituições a se considerar no banco (retirei 'prpesquisas')
     list_of_institutions = ['fsb','futura','mda','voxpopuli','quaest','ipec','poderdata','datafolha','idea','ipespe']
     ## retorna o banco filtrado
@@ -159,7 +159,14 @@ with st.container():
         ### lista de pesquisas
         expander3 = st.expander("Verifique as pesquisas eleitorais utilizadas")
         expander3.write("""#### Lista de pesquisas""")
-        lista = df[['nome_instituto', 'data', 'registro_tse','entrevistados', 'margem_erro', 'confiança', 'tipo_coleta']].fillna(0).astype({'nome_instituto': 'str', 'data': 'datetime64', 'registro_tse': 'str', 'entrevistados':'int','margem_erro':'str','confiança':'int', 'tipo_coleta':'str'})
+        lista = df[['nome_instituto', 'data', 'registro_tse','entrevistados', 'margem_erro', 'confiança', 'tipo_coleta']]
+        lista = lista.fillna(0).astype({'nome_instituto': 'str',
+                                        #'data': 'datetime64', 
+                                        'registro_tse': 'str', 
+                                        'entrevistados':'int',
+                                        'margem_erro':'str',
+                                        'confiança':'int',
+                                        'tipo_coleta':'str'})
         expander3.dataframe(lista)
 
         @st.cache
