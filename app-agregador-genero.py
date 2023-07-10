@@ -16,7 +16,7 @@ import plotly.express as px
 ########################################################################
 
 st.set_page_config(
-     page_title="Agregador de pesquisas eleitorais por gênero",
+     page_title="Agregador de pesquisas eleitorais por gênero e raça",
      page_icon="chart_with_upwards_trend",
      layout="wide",
      initial_sidebar_state="expanded",
@@ -58,7 +58,7 @@ with st.container():
 
 st.markdown("""
 <br>
-<h1 style='text-align: center; color:#202020;font-family:helvetica'>Agregador de pesquisas eleitorais por gênero</h1>
+<h1 style='text-align: center; color:#202020;font-family:helvetica'>Agregador de pesquisas eleitorais por gênero e raça</h1>
 <br>
 <h4 style='text-align: center; color:#54595F;font-family:Segoe UI, sans-serif'>Consolidação de pesquisas para as eleições presidenciais de 2022</h4>
 """, unsafe_allow_html=True)
